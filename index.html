@@ -1490,6 +1490,208 @@ function sendCartToWhatsApp() {
     
     alert("تم تجهيز الطلب ونقلك إلى واتساب لإرساله للإدارة! 🎉");
 }
+// دالة إرسال الطلب للواتساب - مع إصلاح رابط الـ Waze العميق والذكي للهواتف
+function sendCartToWhatsApp() {
+    if (!userCartList || userCartList.length === 0) {
+        alert("سلتك فارغة حالياً، يرجى إضافة منتجات أولاً! 🛒");
+        return;
+    }
+
+    const oldModal = document.getElementById('albaraka-sky-modal');
+    if (oldModal) oldModal.remove();
+
+    // متغيرات لتخزين الإحداثيات والروابط
+    let customerLat = "";
+    let customerLon = "";
+    let customerWazeURL = "";
+
+    const modalHTML = `
+        <div id="albaraka-sky-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(254, 249, 195, 0.2); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; z-index: 99999; opacity: 0; transition: opacity 0.4s ease; direction: rtl; font-family: 'Cairo', sans-serif; font-weight: 900;">
+            
+            <div style="background: rgba(255, 254, 240, 0.88); border: 2px solid rgba(254, 240, 138, 0.7); width: 95%; max-width: 430px; padding: 35px 25px; border-radius: 28px; box-shadow: 0 25px 50px rgba(234, 179, 8, 0.12); text-align: center; transform: translateY(20px); transition: transform 0.4s ease; position: relative; overflow: hidden;">
+                
+                <h3 style="margin: 0 0 10px 0; font-size: 21px; font-weight: 900; color: #854d0e; letter-spacing: -0.5px;">✨ إتمام طلبك من متجر البركة ✨</h3>
+                <div style="width: 60px; height: 4px; background: linear-gradient(90deg, transparent, #eab308, transparent); margin: 0 auto 25px auto; border-radius: 2px;"></div>
+                
+                <div style="margin-bottom: 22px; text-align: right;">
+                    <label style="display: block; font-size: 14px; font-weight: 900; color: #713f12; margin-bottom: 8px; padding-right: 5px;">👤 الاسم الكامل للزبون:</label>
+                    <input type="text" id="modal-cust-name" placeholder="✍️ اكتب اسمك الكريم هنا..." style="width: 100%; padding: 15px 18px; border: 2px solid rgba(234, 179, 8, 0.25); border-radius: 16px; font-size: 14px; font-family: 'Cairo'; font-weight: 800; outline: none; transition: all 0.3s; box-sizing: border-box; background: rgba(255, 255, 255, 0.9); color: #451a03;">
+                </div>
+                
+                <div style="margin-bottom: 32px; text-align: right;">
+                    <label style="display: block; font-size: 14px; font-weight: 900; color: #713f12; margin-bottom: 8px; padding-right: 5px;">🚙 موقع التوصيل الفوري عبر (Waze):</label>
+                    
+                    <button id="geo-location-btn" style="width: 100%; padding: 16px; border: 2px dashed #ca8a04; border-radius: 16px; background: rgba(254, 240, 138, 0.35); color: #854d0e; font-family: 'Cairo'; font-size: 14px; font-weight: 900; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span>📍 اضغط هنا لمشاركة موقعك لفتح الـ Waze تلقائياً</span>
+                    </button>
+                    <div id="geo-status" style="font-size: 12px; font-weight: 900; color: #a16207; margin-top: 8px; text-align: center; display: none;"></div>
+                </div>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button id="modal-submit-btn" style="flex: 1.4; background: linear-gradient(135deg, #eab308, #ca8a04); color: #451a03; border: none; padding: 16px; border-radius: 50px; font-size: 15px; font-weight: 900; font-family: 'Cairo'; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(234,179,8,0.25); display: flex; align-items: center; justify-content: center; gap: 6px;">🚀 تأكيد وإرسال عبر WhatsApp</button>
+                    <button id="modal-close-btn" style="flex: 0.6; background: rgba(254, 249, 195, 0.6); color: #713f12; border: 1px solid rgba(234, 179, 8, 0.2); padding: 16px; border-radius: 50px; font-size: 14px; font-weight: 900; font-family: 'Cairo'; cursor: pointer; transition: all 0.3s ease;">إلغاء</button>
+                </div>
+                
+                <style>
+                    @keyframes floatSky {
+                        0% { transform: translateY(0px); }
+                        50% { transform: translateY(-7px); }
+                        100% { transform: translateY(0px); }
+                    }
+                    #albaraka-sky-modal > div { animation: floatSky 4.5s ease-in-out infinite; }
+                    #modal-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(234,179,8,0.4); }
+                    #geo-location-btn:hover { background: rgba(254, 240, 138, 0.6); }
+                    #albaraka-sky-modal input:focus { border-color: #ca8a04; background: #ffffff; box-shadow: 0 0 15px rgba(234, 179, 8, 0.2); }
+                    @keyframes bubbleRise {
+                        0% { transform: scale(0.3) translateY(40px); opacity: 0; }
+                        15% { transform: scale(1.06) translateY(0); opacity: 1; }
+                        25% { transform: scale(1) translateY(-10px); opacity: 1; }
+                        80% { transform: scale(1) translateY(-80px); opacity: 0.9; }
+                        100% { transform: scale(0.8) translateY(-160px); opacity: 0; filter: blur(3px); }
+                    }
+                </style>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    const modalElement = document.getElementById('albaraka-sky-modal');
+    const modalCard = modalElement.querySelector('div');
+    const submitBtn = document.getElementById('modal-submit-btn');
+    const closeBtn = document.getElementById('modal-close-btn');
+    const locationBtn = document.getElementById('geo-location-btn');
+    const locationStatus = document.getElementById('geo-status');
+
+    requestAnimationFrame(() => {
+        modalElement.style.opacity = '1';
+        modalCard.style.transform = 'translateY(0)';
+    });
+
+    const closeModal = () => {
+        modalElement.style.opacity = '0';
+        modalCard.style.transform = 'translateY(20px)';
+        setTimeout(() => modalElement.remove(), 400);
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // التقاط الموقع وبناء الرابط العالمي لـ Waze
+    locationBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+            locationStatus.style.display = "block";
+            locationStatus.style.color = "#ef4444";
+            locationStatus.innerHTML = "❌ متصفحك لا يدعم تحديد الموقع الجغرافي تلقائياً.";
+            return;
+        }
+
+        locationStatus.style.display = "block";
+        locationStatus.style.color = "#a16207";
+        locationStatus.innerHTML = "⏳ جاري تحديد موقعك بالـ GPS لتجهيز خريطة Waze...";
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                customerLat = position.coords.latitude;
+                customerLon = position.coords.longitude;
+                
+                // الصيغة العالمية الأكثر أماناً والمدعومة داخل محادثات واتساب لفتح التطبيق مباشرة
+                customerWazeURL = `https://www.waze.com/ul?ll=${customerLat},${customerLon}&navigate=yes`;
+                
+                locationBtn.style.background = "rgba(132, 204, 22, 0.23)";
+                locationBtn.style.borderColor = "#84cc16";
+                locationBtn.style.color = "#166534";
+                locationBtn.innerHTML = "✅ تم ربط موقعك بتطبيق Waze بنجاح!";
+                
+                locationStatus.style.color = "#166534";
+                locationStatus.innerHTML = "🚙 الموقع جاهز ومربوط الآن بالخريطة المرورية الفورية.";
+            },
+            (error) => {
+                locationStatus.style.display = "block";
+                locationStatus.style.color = "#ef4444";
+                if (error.code === error.PERMISSION_DENIED) {
+                    locationStatus.innerHTML = "⚠️ يرجى تفعيل الـ GPS والسماح للمتصفح بالوصول لموقعك.";
+                } else {
+                    locationStatus.innerHTML = "❌ تعذر التقاط الإحداثيات، يرجى المحاولة مرة أخرى.";
+                }
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    });
+
+    submitBtn.addEventListener('click', () => {
+        const nameInput = document.getElementById('modal-cust-name');
+        const customerName = nameInput.value.trim();
+
+        if (customerName === "") {
+            nameInput.style.borderColor = "#ef4444";
+            nameInput.style.background = "#fef2f2";
+            nameInput.focus();
+            return;
+        }
+
+        if (customerWazeURL === "") {
+            locationBtn.style.borderColor = "#ef4444";
+            locationBtn.style.background = "rgba(254, 242, 242, 0.8)";
+            locationStatus.style.display = "block";
+            locationStatus.style.color = "#ef4444";
+            locationStatus.innerHTML = "⚠️ خطوة إجبارية: يرجى الضغط على زر الموقع أولاً!";
+            return;
+        }
+
+        // إطلاق فقاعة العوم الصفراء العريضة
+        modalCard.style.transition = 'all 0.3s ease';
+        modalCard.style.opacity = '0';
+        modalCard.style.transform = 'scale(0.7)';
+
+        const bubbleHTML = `
+            
+                <div style="background: linear-gradient(135deg, #eab308, #ca8a04); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #451a03; font-size: 14px; box-shadow: 0 4px 10px rgba(234,179,8,0.2);"></div>
+                <span>تم ربط الـ Waze والطلب! طيران إلى WhatsApp... </span>
+            </div>
+        `;
+
+        setTimeout(() => {
+            modalElement.insertAdjacentHTML('beforeend', bubbleHTML);
+        }, 150);
+
+        const storeWhatsAppNumber = "972524310286"; 
+        let messageText = `*طلب جديد من متجر البركة الإلكتروني *\n\n`;
+        messageText += ` *اسم الزبون:* ${customerName}\n`;
+        // 1. رابط الـ Waze الأول (الرابط العالمي للمتصفحات والمحادثات)
+        messageText += ` *رابط الخريطة الأساسي (Waze):* ${customerWazeURL}\n`;
+        // 2. الرابط العميق المباشر (مجبر للهواتف لفتح التطبيق قسرياً)
+        messageText += `📱 *رابط فتح التطبيق مباشرة:* waze://?ll=${customerLat},${customerLon}&navigate=yes\n`;
+        // 3. نسخة احتياطية من الإحداثيات الصافية للنسخ واللصق الطارئ
+        messageText += `🔢 *الإحداثيات الجغرافية:* \`${customerLat},${customerLon}\`\n`;
+        messageText += `-----------------------------------\n\n`;
+        messageText += `🛒 *تفاصيل المشتريات:*\n`;
+
+        let finalTotal = 0;
+        userCartList.forEach((item, index) => {
+            const itemTotal = item.price * item.qty;
+            finalTotal += itemTotal;
+            messageText += `${index + 1}) *${item.name}*\n     الكمية: [ ${item.qty} ] ✖️ السعر: ${item.price.toFixed(2)} ₪ ⬅️ *${itemTotal.toFixed(2)} ₪*\n`;
+        });
+
+        messageText += `\n-----------------------------------\n`;
+        messageText += `💰 *الإجمالي النهائي للطلب:* [ *${finalTotal.toFixed(2)} ₪* ]\n\n`;
+        messageText += `🚙 _اضغط على أحد الروابط أعلاه لفتح تطبيق الـ Waze والتوجيه فوراً._`;
+
+        const encodedMessage = encodeURIComponent(messageText);
+        const whatsappURL = `https://api.whatsapp.com/send?phone=${storeWhatsAppNumber}&text=${encodedMessage}`;
+        
+        userCartList = [];
+        if (typeof saveCartToLocalStorage === 'function') saveCartToLocalStorage();
+        if (typeof refreshCartInterface === 'function') refreshCartInterface();
+        if (typeof toggleCartMenu === 'function') toggleCartMenu(false);
+
+       // تأخير الانتقال لـ 2.5 ثانية (2500 مللي ثانية) لكي تظهر الفقاعة وتتحرك بوضوح
+setTimeout(() => {
+    window.location.href = whatsappURL;
+    modalElement.remove();
+}, 2500);
+    });
+}
     </script>
 </body>
 </html>
