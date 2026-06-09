@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0f766e">
+    <meta name="apple-mobile-web-app-title" content="البركة">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>البركة • الكعيبة | تجربة تسوق حية وفاخرة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* هوية بصرية خيالية وزجاجية فاخرة */
+            --primary-solid: #0f766e;    
+            --primary-dark: #042f2e;     
+            --primary-light: #ccfbf1;    
+            --luxury-black: #020617;     
+            --navy-blue: #0f172a;        
+            --accent-gold: #fbbf24;      
+            --accent-gold-glow: rgba(251, 191, 36, 0.6);
+            --bg-base: #f8fafc;          
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --card-shadow: 0 15px 35px rgba(15, 23, 42, 0.05), inset 0 2px 15px rgba(255,255,255,0.6);
+            --radius-premium: 28px;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            margin: 0; padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            /* خلفية هالة زمردية/ذهبية خيالية */
+            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(15, 118, 110, 0.07), transparent 30%),
+                radial-gradient(circle at 85% 20%, rgba(251, 191, 36, 0.07), transparent 30%);
+            background-attachment: fixed;
+            color: #1e293b; 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+
+        /* ========================================================
+           النظام الموحد للأزرار الخيالية (Crystal Fantasy Buttons)
+           ======================================================== */
+        .cart-trigger, .premium-load-more-btn, .filter-btn, .category-toggle-btn,
+        .checkout-btn, .continue-shopping-btn, .phone-call-btn-link, .waze-premium-btn,
+        .working-hours-capsule {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                0 8px 32px 0 rgba(15, 118, 110, 0.08), 
+                inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+                inset 0 2px 10px rgba(255, 255, 255, 0.8);
+            color: var(--luxury-black);
+            border-radius: 40px; 
+            font-weight: 800;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+        }
+
+        /* تأثير الوميض الزجاجي المتحرك */
+        .cart-trigger::after, .premium-load-more-btn::after, .filter-btn::after, .category-toggle-btn::after,
+        .checkout-btn::after, .continue-shopping-btn::after, .phone-call-btn-link::after, .waze-premium-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+            transform: skewX(-25deg);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        /* التفاعل عند التمرير (Hover) */
+        .cart-trigger:hover, .premium-load-more-btn:hover, .filter-btn:hover:not(.active), .category-toggle-btn:hover,
+        .continue-shopping-btn:hover, .phone-call-btn-link:hover, .waze-premium-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                0 15px 35px 0 rgba(15, 118, 110, 0.2), 
+                inset 0 0 0 1px rgba(255, 255, 255, 0.9),
+                0 0 20px rgba(15, 118, 110, 0.3);
+            border-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary-solid);
+        }
+
+        .cart-trigger:hover::after, .premium-load-more-btn:hover::after, .filter-btn:hover::after, .category-toggle-btn:hover::after,
+        .checkout-btn:hover::after, .continue-shopping-btn:hover::after, .phone-call-btn-link:hover::after, .waze-premium-btn:hover::after {
+            left: 150%;
+        }
+
+        /* الأزرار البارزة (النشطة، إتمام الطلب) - الزمرد الساطع */
+        .filter-btn.active, .checkout-btn, .category-toggle-btn {
+            background: linear-gradient(135deg, var(--primary-solid), var(--primary-dark));
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 
+                0 10px 30px rgba(15, 118, 110, 0.4),
+                inset 0 2px 10px rgba(255,255,255,0.2);
+        }
+        .filter-btn.active:hover, .checkout-btn:hover, .category-toggle-btn:hover {
+            background: linear-gradient(135deg, #0d9488, #042f2e);
+            color: white;
+            box-shadow: 
+                0 15px 40px rgba(15, 118, 110, 0.6),
+                0 0 25px rgba(15, 118, 110, 0.5);
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        /* ========================================================
+           زر الإضافة الدائري الخيالي (Magical Orb)
+           ======================================================== */
+        .circle-add-btn {
+            background: linear-gradient(135deg, var(--luxury-black), #1e293b);
+            color: var(--accent-gold);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            width: 46px; height: 46px; 
+            border-radius: 50%;
+            font-size: 22px; 
+            font-weight: 300; 
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25), inset 0 0 10px rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+        }
+        .circle-add-btn::before {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            background: var(--accent-gold-glow); border-radius: 50%; transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+        .circle-add-btn:hover {
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 12px 25px rgba(251, 191, 36, 0.4), 0 0 15px var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: white;
+        }
+        .circle-add-btn:hover::before {
+            width: 150%; height: 150%; z-index: -1;
+        }
+
+        /* أزرار الكمية السحرية داخل السلة */
+        .quantity-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            color: var(--primary-solid);
+            width: 30px; height: 30px; border-radius: 50%;
+            font-size: 16px; font-weight: 900; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .quantity-btn:hover {
+            background: var(--primary-solid); color: white;
+            transform: scale(1.15); box-shadow: 0 5px 15px rgba(15, 118, 110, 0.4);
+        }
+
+        /* ========================================================
+           تنسيقات الشاشة والعناصر الفاخرة الأخرى
+           ======================================================== */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--luxury-black), var(--primary-dark), var(--luxury-black));
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+            color: #fff; text-align: center; padding: 12px 15px;
+            font-size: 13px; font-weight: 700; letter-spacing: 1px;
+            border-bottom: 2px solid var(--accent-gold);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            padding: 15px 6%; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.4s ease;
+        }
+
+        .brand-logo .main-title { font-size: 26px; font-weight: 900; color: var(--luxury-black); letter-spacing: -0.5px; }
+        .brand-logo .separator-dot { width: 6px; height: 6px; background-color: var(--primary-solid); border-radius: 50%; box-shadow: 0 0 10px var(--primary-solid); }
+        .brand-logo .sub-title { font-size: 13px; font-weight: 600; color: var(--accent-gold); border: 1px solid rgba(251, 191, 36, 0.4); padding: 2px 12px; border-radius: 30px; background: rgba(251, 191, 36, 0.08); }
+
+        nav ul { list-style: none; display: flex; gap: 8px; }
+        nav ul li a {
+            text-decoration: none; color: var(--navy-blue); font-weight: 900;
+            padding: 10px 20px; border-radius: 20px; font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; display: inline-block;
+        }
+        nav ul li a:hover { background: rgba(255,255,255,0.6); color: var(--primary-solid); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        .cart-trigger { padding: 12px 24px; font-size: 14px; }
+        .cart-badge { background: var(--primary-solid); color: white; padding: 2px 10px; border-radius: 12px; font-size: 12px; box-shadow: 0 0 10px rgba(15,118,110,0.5); }
+
+        /* الكروت الزجاجية العائمة للمنتجات */
+        .premium-product-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-premium); padding: 16px;
+            box-shadow: var(--card-shadow); border: 1px solid var(--glass-border);
+            display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .premium-product-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px rgba(15,118,110,0.15), inset 0 2px 20px rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.9); }
+        .premium-product-card img { width: 100%; height: 180px; object-fit: cover; border-radius: calc(var(--radius-premium) - 8px); margin-bottom: 14px; transition: transform 0.6s ease; }
+        .premium-product-card:hover img { transform: scale(1.04); }
+        .premium-product-card h4 { font-size: 15px; font-weight: 800; color: var(--luxury-black); margin-bottom: 10px; line-height: 1.4em; max-height: 2.8em; overflow: hidden; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+        .card-footer .price-tag { font-size: 20px; font-weight: 900; color: var(--primary-solid); text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+        /* كروت الأقسام السريعة الخيالية */
+        .quick-nav-grid { display: flex; gap: 16px; margin: 40px 0; overflow-x: auto; padding: 20px 10px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+        .quick-nav-grid::-webkit-scrollbar { display: none; }
+        
+        .quick-card {
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: var(--radius-premium);
+            padding: 24px 18px; text-align: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 140px; scroll-snap-align: start; box-shadow: var(--card-shadow);
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .quick-card img { width: 90px; height: 90px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(255,255,255,0.8); transition: all 0.5s ease; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .quick-card h3 { font-size: 15px; font-weight: 800; margin-top: 14px; white-space: nowrap; color: var(--navy-blue); }
+        .quick-card:hover { transform: translateY(-10px) scale(1.02); background: rgba(255,255,255,0.8); box-shadow: 0 25px 45px rgba(15,118,110,0.15); border-color: rgba(255,255,255,1); }
+        .quick-card:hover img { transform: rotate(8deg) scale(1.1); border-color: var(--primary-solid); box-shadow: 0 15px 25px rgba(15,118,110,0.3); }
+
+        /* تعديلات السلة الجانبية والفلاتر */
+        .subcategory-filters { display: flex; justify-content: center; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; padding: 10px; }
+        .filter-btn { padding: 10px 22px; font-size: 14px; }
+        
+        .sidebar-cart { position: fixed; top: 0; left: -420px; width: 100%; max-width: 420px; height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(30px); z-index: 2000; box-shadow: 20px 0 60px rgba(15,23,42,0.2); display: flex; flex-direction: column; transition: left 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-right: 1px solid rgba(255,255,255,0.5); }
+        .sidebar-cart.open { left: 0; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(2, 6, 23, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1999; display: none; opacity: 0; transition: opacity 0.4s ease; }
+        .cart-overlay.active { display: block; opacity: 1; }
+
+        .slider-section { position: relative; width: 100%; height: 480px; overflow: hidden; background-color: var(--luxury-black); border-radius: 0 0 40px 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .main-slide { position: absolute; width: 100%; height: 100%; opacity: 0; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: flex-start; transition: opacity 1s ease-in-out; z-index: 1; }
+        .main-slide.active-slide { opacity: 1; z-index: 5; animation: kineticZoom 8s infinite alternate ease-in-out; }
+        .main-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to left, rgba(2,6,23, 0.7) 0%, rgba(2,6,23, 0.2) 60%, rgba(2,6,23, 0) 100%); }
+        .slide-inner { position: relative; z-index: 10; text-align: right; width: 100%; max-width: 1200px; padding: 0 60px; }
+        .text-glass-container { display: inline-block; background: var(--glass-bg); backdrop-filter: blur(25px); padding: 35px 45px; border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: 0 30px 60px rgba(0,0,0,0.3); opacity: 0; transform: scale(0.9) translateY(40px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .main-slide.active-slide .text-glass-container { opacity: 1; transform: scale(1) translateY(0); transition-delay: 0.3s; }
+
+        /* باقي التنسيقات العامة للحفاظ على البنية */
+        .products-showcase { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-bottom: 50px; }
+        .category-actions { display: flex; justify-content: center; margin-top: 25px; }
+        .category-toggle-btn { padding: 14px 35px; font-size: 16px; border-radius: 50px; }
+        .title-decorated { text-align: center; font-size: 32px; font-weight: 900; margin: 70px 0 30px; color: var(--luxury-black); position: relative; text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
+        .title-decorated::after { content: ''; display: block; width: 80px; height: 6px; background: linear-gradient(90deg, var(--primary-solid), var(--accent-gold)); margin: 15px auto 0; border-radius: 10px; }
+        .main-container { max-width: 1250px; margin: 0 auto; padding: 0 25px; }
+        .bakery-hero-card { background: linear-gradient(135deg, #0f172a 0%, #020617 100%); border-radius: var(--radius-premium); margin: 50px 0; display: flex; align-items: center; justify-content: space-between; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .bakery-hero-content { padding: 50px; flex: 1; color: #fff; z-index: 2; }
+        .bakery-hero-content .badge { background: linear-gradient(90deg, var(--accent-gold), #d97706); color: white; padding: 6px 18px; border-radius: 30px; font-size: 13px; font-weight: 800; display: inline-block; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(217, 119, 6, 0.4); }
+        .bakery-hero-content h2 { font-size: 34px; font-weight: 900; color: #fde047; margin-bottom: 15px; text-shadow: 0 2px 15px rgba(253, 224, 71, 0.3); }
+        .bakery-hero-image { width: 45%; height: 350px; background-image: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&auto=format&fit=crop&q=80'); background-size: cover; background-position: center; position: relative; }
+        .bakery-hero-image::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, #0f172a 0%, rgba(15, 23, 42, 0) 50%); }
+
+        /* تطاير المنتجات الخيالي */
+        .flying-product-premium {
+            position: fixed; z-index: 10000; width: 60px; height: 60px; border-radius: 50%;
+            background-size: cover; background-position: center;
+            box-shadow: 0 10px 30px rgba(15, 118, 110, 0.6), 0 0 20px rgba(251, 191, 36, 0.5);
+            border: 3px solid var(--accent-gold); pointer-events: none;
+            transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.85s ease;
+        }
+
+        @media (max-width: 1024px) { .products-showcase { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+        @media (max-width: 768px) {
+            header { padding: 12px 5%; }
+            nav ul { display: none; }
+            .slider-section { height: 350px; border-radius: 0 0 25px 25px; }
+            .slide-inner { padding: 0 20px; text-align: center; }
+            .text-glass-container { padding: 25px; }
+            .products-showcase { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .bakery-hero-card { flex-direction: column; text-align: center; }
+            .bakery-hero-image { width: 100%; height: 220px; }
+            .bakery-hero-image::before { background: linear-gradient(to top, #0f172a 0%, rgba(15, 23, 42, 0) 60%); }
+            .subcategory-filters { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; margin: 0 -25px 25px; padding: 10px 25px; scrollbar-width: none; }
+            .filter-btn { flex: 0 0 auto; }
+            .circle-add-btn { width: 38px; height: 38px; font-size: 18px; }
+        }
+        
+        /* إضافات أخيرة */
+        .hidden-product-card { display: none !important; }
+        .cart-top-bar { display: flex; justify-content: space-between; align-items: center; padding: 25px; border-bottom: 1px solid rgba(0,0,0,0.05); background: rgba(255,255,255,0.5); }
+        .cart-scroll-area { flex: 1; overflow-y: auto; padding: 20px 25px; }
+        .single-cart-item { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid rgba(0,0,0,0.05); gap: 15px; }
+        .summary-total { font-size: 18px; font-weight: 900; padding: 25px; border-top: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; color: var(--luxury-black); background: rgba(255,255,255,0.7); }
+        .cart-actions-footer { padding: 0 25px 30px; background: rgba(255,255,255,0.7); display: flex; flex-direction: column; gap: 15px; }
+        .checkout-btn { width: 100%; padding: 16px; font-size: 16px; }
+        .continue-shopping-btn { width: 100%; padding: 14px; }
+
+        /* 🌌 إحياء خلفية الموقع بروح بيضاء حية وناعمة */
+body {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
+    color: #1e293b !important;
+}
+
+/* 🧪 الهيدر الزمردي الفاخر بتأثير زجاجي عميق */
+.custom-premium-header, .albaraka-premium-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    /* درجة الزمردي الفاخر الداكن مع شفافية زجاجية */
+    background: rgba(11, 63, 59, 0.92) !important; 
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    /* خط سفلي ذهبي خفيف جداً يحدد الهيدر بنعومة */
+    border-bottom: 2px solid rgba(234, 179, 8, 0.25) !important;
+    z-index: 9999;
+    box-shadow: 0 8px 32px rgba(11, 63, 59, 0.15) !important;
+}
+
+/* ☰ تنسيق شرطات المنيو لتتناسب مع الخلفية الزمردية */
+.menu-trigger-btn .bar {
+    background-color: #fef08a !important; /* لون ذهبي هادئ ومضيء */
+}
+
+/* 🛒 تنسيق زر السلة ليتناغم كلياً مع الهيدر الجديد */
+#main-basket-btn {
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: #eab308 !important; /* لون ذهبي فاخر وصريح لجذب العين */
+    color: #042f2e !important; /* نص زمردي داكن */
+    border: none !important;
+    padding: 10px 18px !important;
+    border-radius: 30px !important;
+    font-family: 'Cairo' !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4) !important;
+    transition: all 0.3s ease !important;
+}
+
+#main-basket-btn:hover {
+    background: #facc15 !important;
+    transform: scale(1.03) !important;
+}
+
+/* عداد السلة الداخلي */
+#main-basket-count {
+    background: #042f2e !important;
+    color: #ffffff !important;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+/* الفراغ التعويضي لمنع زحف المحتوى تحت الهيدر */
+.header-spacer {
+    height: 75px;
+    width: 100%;
+    display: block;
+}
+
+/*  تنسيقات عامة للأقسام لتبدو مفعمة بالحياة */
+.main-section {
+    padding: 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Cairo', sans-serif;
+}
+.section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0b3f3b; /* لون زمردي داكن فاخر */
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+}
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 0;
+    width: 50px;
+    height: 3px;
+    background: #eab308; /* خط ذهبي تحت العنوان */
+    border-radius: 2px;
+}
+
+/*  شبكة الفئات والعروض */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/*  بطاقات الفئات الفاخرة */
+.category-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 25px;
+    border: 1px solid #f1f5f9;
+    cursor: pointer;
+}
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(11, 63, 59, 0.12);
+    border-color: rgba(11, 63, 59, 0.2);
+}
+.category-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+/*  بطاقات العروض الجاذبة */
+.offer-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border: 1px solid #fee2e2; /* حواف حمراء خفيفة */
+    position: relative;
+}
+.offer-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ef4444;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.offer-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #f8fafc;
+}
+.offer-details {
+    padding: 20px;
+    text-align: right;
+}
+.price-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+.new-price { color: #ef4444; font-weight: 800; font-size: 18px; }
+.old-price { color: #94a3b8; text-decoration: line-through; font-size: 14px; }
+
+/*  قسم التواصل */
+.contact-wrapper {
+    background: linear-gradient(135deg, #0b3f3b 0%, #042f2e 100%);
+    border-radius: 24px;
+    padding: 40px;
+    color: #ffffff;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    box-shadow: 0 10px 30px rgba(11, 63, 59, 0.2);
+}
+.contact-info a {
+    color: #fef08a;
+    text-decoration: none;
+    font-weight: 700;
+}
+/* إلغاء البنر والفراغات ليلتصق الهيدر بالسلايدر مباشرة */
+.promo-banner {
+    display: none !important; /* إخفاء البنر تماماً ليفسح المجال للسلايدر */
+}
+
+.header-spacer {
+    display: none !important; /* إلغاء الفراغ الأبيض المزعج */
+}
+
+.slider-section {
+    margin-top: 75px !important; /* يجعل السلايدر يبدأ أسفل الهيدر (ارتفاعه 75px) مباشرة */
+}
+    </style>
+</head>
+<body>
+
+   
+    <div class="promo-banner">✨ مرحباً بكم في <b>سوبر ماركت البركة</b> • فرع الكعيبة الطازج الفاخر <span>[تسوق ذكي نابض بالحياة]</span> ✨</div>
+  
+    <header id="main-header-anchor" class="custom-premium-header" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 75px !important; background: #0b3f3b !important; border-bottom: 2px solid rgba(234, 179, 8, 0.35) !important; z-index: 99999 !important; box-shadow: 0 8px 32px rgba(11, 63, 59, 0.18) !important; direction: rtl !important; display: block !important;">
+    
+    <div style="display: table !important; width: 100% !important; height: 100% !important; max-width: 1200px !important; margin: 0 auto !important; padding: 0 20px !important; box-sizing: border-box !important;">
+        
+        <div style="display: table-cell !important; vertical-align: middle !important; text-align: right !important; width: 25% !important;">
+            <button class="menu-trigger-btn" onclick="toggleAlbarakaMenu(true)" style="background: none !important; border: none !important; cursor: pointer !important; display: inline-flex !important; flex-direction: column !important; gap: 5px !important; padding: 10px !important;">
+                <span class="bar" style="width: 24px !important; height: 3px !important; background-color: #fef08a !important; border-radius: 2px !important; display: block !important;"></span>
+                <span class="bar" style="width: 24px !important; height: 3px !important; background-color: #fef08a !important; border-radius: 2px !important; display: block !important;"></span>
+                <span class="bar" style="width: 24px !important; height: 3px !important; background-color: #fef08a !important; border-radius: 2px !important; display: block !important;"></span>
+            </button>
+        </div>
+        
+        <div style="display: table-cell !important; vertical-align: middle !important; text-align: center !important; width: 50% !important;">
+            <a class="brand-logo-container" onclick="smoothScrollTo('promo-slider-anchor')" style="text-decoration: none !important; cursor: pointer !important; display: inline-block !important;">
+                <div class="brand-logo" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; font-family: 'Cairo', sans-serif !important; margin: 0 !important; padding: 0 !important;">
+                    <span class="main-title" style="font-size: 25px !important; font-weight: 900 !important; color: #fef08a !important; letter-spacing: 1px !important; line-height: 1.1 !important; text-shadow: 0 0 15px rgba(234, 179, 8, 0.45) !important;">
+                        الـبـركـة
+                    </span>
+                    <div class="logo-divider" style="width: 45px !important; height: 1px !important; background: linear-gradient(90deg, transparent, #eab308, transparent) !important; margin: 5px 0 4px 0 !important; opacity: 0.8 !important;"></div>
+                    <span class="sub-title" style="font-size: 10px !important; font-weight: 500 !important; color: #cbd5e1 !important; letter-spacing: 4px !important; line-height: 1 !important; text-indent: 4px !important;">
+                        AL - KAEIBA
+                    </span>
+                </div>
+            </a>
+        </div>
+
+        <div style="display: table-cell !important; vertical-align: middle !important; text-align: left !important; width: 25% !important;">
+            <button id="main-basket-btn" onclick="toggleCartMenu(true)" style="position: static !important; transform: none !important; margin: 0 !important; inset: auto !important; display: inline-flex !important; align-items: center !important; gap: 8px !important; background: #eab308 !important; color: #042f2e !important; border: none !important; padding: 10px 18px !important; border-radius: 30px !important; font-family: 'Cairo' !important; font-weight: 700 !important; cursor: pointer !important; box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4) !important;">
+                <span>🛒 السلة</span>
+                <span id="main-basket-count" style="background: #042f2e !important; color: white !important; min-width: 22px !important; height: 22px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 11px !important; font-weight: 900 !important; padding: 2px !important;">0</span>
+            </button>
+        </div>
+
+    </div>
+</header>
+
+<div class="header-spacer" style="height: 75px !important; width: 100% !important; display: block !important; clear: both !important; visibility: hidden !important;"></div>
+
+<div id="albaraka-side-menu" class="side-menu-wrapper" style="position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: #0b3f3b; z-index: 100000; box-shadow: -5px 0 25px rgba(0,0,0,0.3); transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); direction: rtl; font-family: 'Cairo', sans-serif;">
+    
+    <div class="menu-overlay" onclick="toggleAlbarakaMenu(false)" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: -1; display: none; backdrop-filter: blur(4px);"></div>
+    
+    <div class="menu-content" style="padding: 30px 20px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
+        <div class="menu-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(254, 240, 138, 0.15); padding-bottom: 15px; margin-bottom: 25px;">
+            <h3 style="color: #fef08a; margin: 0; font-size: 20px; font-weight: 700;">✨ أقسام البركة</h3>
+            <button onclick="toggleAlbarakaMenu(false)" style="background: none; border: none; color: #cbd5e1; font-size: 22px; cursor: pointer;">✕</button>
+        </div>
+        
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+            <li>
+                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('promo-slider-anchor')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
+                    🏠 الرئيسية
+                </a>
+            </li>
+            <li>
+                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('all-products')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
+                    📦 جميع المنتجات
+                </a>
+            </li>
+            <li>
+                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('vegetables')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
+                    🍎 الخضار والفواكه
+                </a>
+            </li>
+            <li>
+                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('canned-food')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
+                    🥫 المواد التموينية
+                </a>
+            </li>
+            <li>
+                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('offers')" style="color: #fef08a; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.15)'" onmouseout="this.style.background='transparent'">
+                    🔥 أقوى العروض
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+function toggleAlbarakaMenu(open) {
+    const menu = document.getElementById('albaraka-side-menu');
+    const overlay = menu.querySelector('.menu-overlay');
+    if (!menu) return;
+    
+    if (open) {
+        menu.style.right = '0';
+        overlay.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    } else {
+        menu.style.right = '-320px';
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+</script>
+
+<div class="header-spacer" style="height: 75px; width: 100%; display: block; clear: both; visibility: hidden; margin-bottom: 0;"></div>
+
+
+
+    <div id="cartOverlay" class="cart-overlay" onclick="toggleCartMenu(false)"></div>
+
+    <div id="sidebarCart" class="sidebar-cart">
+        <div class="cart-top-bar">
+            <h3 style="font-weight: 900; font-size: 20px; color: var(--luxury-black);">🛒 سلة المشتريات</h3>
+            <button class="close-cart-btn" onclick="toggleCartMenu(false)" style="background: none; border: none; font-size: 30px; cursor: pointer; color: #94a3b8;">×</button>
+        </div>
+        
+        <div class="cart-scroll-area" id="cart-items-list-container"></div>
+        
+        <div class="summary-total">
+            <span>المجموع الإجمالي:</span>
+            <span><strong id="cart-total-amount">0.00</strong> ₪</span>
+        </div>
+        
+        <div class="cart-actions-footer">
+            <button class="checkout-btn" onclick="sendCartToWhatsApp()">إتمام الطلب عبر WhatsApp</button>
+            <button class="continue-shopping-btn" onclick="toggleCartMenu(false)">متابعة التسوق</button>
+        </div>
+    </div>
+
+  <div id="promo-slider-anchor"></div>
+<div class="magic-slider-wrapper" style="margin-bottom: 40px; width: 100%; position: relative; overflow: hidden; height: 500px; border-radius: 24px; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);">
+    
+    <img id="main-dynamic-slide" src="https://tse4.mm.bing.net/th/id/OIP.klaRbgyX1VvjqqUvjjjp4gAAAA?pid=Api&h=220&P=0" alt="طبيعة ساحرة" 
+         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; transform: scale(1); transition: opacity 1.2s ease-in-out, transform 8s linear;">
+    
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135px, rgba(13, 27, 42, 0.6) 0%, rgba(47, 62, 70, 0.4) 100%); z-index: 2;"></div>
+    
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; z-index: 3;">
+        <div id="magic-text-container" style="background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 50px; border-radius: 30px; max-width: 75%; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.2); transition: all 1s ease-in-out; transform: translateY(0); opacity: 1;">
+            <h2 id="slider-main-title" style="font-size: 38px; margin-top: 0; margin-bottom: 15px; font-weight: 800; color: #ffffff; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-family: 'Cairo', sans-serif;">جودة نضمنها لك</h2>
+            <div id="magic-line" style="width: 60px; height: 3px; background: linear-gradient(90deg, transparent, #2ec4b6, transparent); margin: 0 auto 20px auto; transition: width 0.8s ease;"></div>
+            <p id="slider-sub-title" style="font-size: 19px; margin: 0; font-weight: 500; color: #f1f5f9; text-shadow: 0 2px 8px rgba(0,0,0,0.4); line-height: 1.8;">أجود المواد التموينية والسلع الأساسية من أفخر الماركات العالمية.</p>
+        </div>
+    </div>
+
+    <div id="magic-dots-container" style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 4; display: flex; gap: 12px; align-items: center;">
+        </div>
+
+    <div id="magic-progress-bar" style="position: absolute; bottom: 0; left: 0; height: 4px; background: linear-gradient(90deg, #2ec4b6, #00f5d4); width: 0%; z-index: 5; transition: width 5000ms linear;"></div>
+</div>
+</div>
+
+
+
+<div class="main-container">
+        
+        <div class="scifi-orbital-viewport" style="max-width: 1300px; margin: 40px auto; padding: 10px 20px; direction: rtl; position: relative;">
+    
+    <div style="text-align: center; margin-bottom: 35px; position: relative;">
+        <span style="font-size: 11px; font-weight: 900; color: #0f766e; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 5px; font-family: 'Cairo', sans-serif;">Premium Hyper Market</span>
+        <h3 style="font-size: 26px; font-weight: 900; color: #0f172a; margin: 0; font-family: 'Cairo', sans-serif; display: inline-flex; align-items: center; gap: 10px;">
+            تصفح الأقسام الذكية 
+            <span style="display: inline-block; width: 8px; height: 8px; background: #0f766e; border-radius: 50%; box-shadow: 0 0 12px #0f766e; animation: scifiPulse 1.5s infinite;"></span>
+        </h3>
+    </div>
+
+    <div class="futuristic-scrolly-deck" style="display: flex; gap: 20px; padding: 25px 15px 35px 15px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
+        
+        <style>
+            /* إخفاء السكرول بار الافتراضي */
+            .futuristic-scrolly-deck::-webkit-scrollbar { display: none; }
+            
+            /* تحويل التصميم إلى شبكة متناسقة في الشاشات الكبيرة تلقائياً */
+            @media (min-width: 992px) {
+                .futuristic-scrolly-deck {
+                    display: grid !important;
+                    grid-template-columns: repeat(7, 1fr) !important;
+                    overflow-x: visible !important;
+                    gap: 15px !important;
+                    padding: 25px 0 !important;
+                }
+            }
+
+            /* البنية الأساسية للكارت الهولوغرافي الخيالي */
+            .quantum-scifi-card {
+                flex: 0 0 135px;
+                scroll-snap-align: start;
+                background: rgba(255, 255, 255, 0.45);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                border-radius: 24px;
+                padding: 20px 10px;
+                text-align: center;
+                cursor: pointer;
+                position: relative;
+                overflow: visible;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1), 
+                            box-shadow 0.5s cubic-bezier(0.2, 1, 0.3, 1), 
+                            border-color 0.4s ease, 
+                            background 0.4s ease !important;
+                box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04), inset 0 2px 10px rgba(255,255,255,0.6);
+            }
+
+            /* الغلاف الدائري المضيء للأنيميشن */
+            .neon-halo-wrapper {
+                width: 85px;
+                height: 85px;
+                border-radius: 50%;
+                position: relative;
+                padding: 4px;
+                background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(241,245,249,0.5));
+                box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+                transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1) !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .neon-halo-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1) !important;
+            }
+
+            /* عنوان الكارت الفاخر */
+            .quantum-scifi-card h3 {
+                font-size: 13px;
+                font-weight: 800;
+                color: #1e293b;
+                margin: 12px 0 0 0;
+                white-space: nowrap;
+                transition: color 0.3s ease, transform 0.3s ease !important;
+                font-family: 'Cairo', sans-serif;
+            }
+
+            /* مؤشر خطي نيون مخفي أسفل كل كارت */
+            .quantum-scifi-card::after {
+                content: '';
+                position: absolute;
+                bottom: 8px;
+                width: 0;
+                height: 3px;
+                border-radius: 10px;
+                transition: width 0.4s ease, background 0.4s ease;
+            }
+
+            /* ==========================================
+               المؤثرات التفاعلية المستقبلية عند تمرير الماوس (Hover)
+               ========================================== */
+            .quantum-scifi-card:hover {
+                transform: translateY(-12px) scale(1.03) rotateX(4deg) !important;
+                background: rgba(255, 255, 255, 0.9);
+                border-color: rgba(255, 255, 255, 1);
+            }
+
+            .quantum-scifi-card:hover h3 {
+                transform: translateY(-2px);
+            }
+
+            .quantum-scifi-card:hover .neon-halo-wrapper img {
+                transform: scale(1.1) rotate(-5deg);
+            }
+
+            .quantum-scifi-card:hover::after {
+                width: 35px;
+            }
+
+            /* تخصيص هالات نيون غامرة بألوان المنتجات لإثارة رغبة الشراء وعلم نفس الألوان */
+            
+            /* 1. الأجبان - أزرق سيان ناصع */
+            .node-dairy:hover { border-color: rgba(56, 189, 248, 0.5); box-shadow: 0 25px 45px rgba(56, 189, 248, 0.22); }
+            .node-dairy:hover .neon-halo-wrapper { background: linear-gradient(135deg, #38bdf8, #0369a1); box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+            .node-dairy:hover h3 { color: #0369a1; }
+            .node-dairy::after { background: #38bdf8; }
+
+            /* 2. الخضار - أخضر زمردي حيوي وعضوي */
+            .node-veg:hover { border-color: rgba(74, 222, 128, 0.5); box-shadow: 0 25px 45px rgba(74, 222, 128, 0.22); }
+            .node-veg:hover .neon-halo-wrapper { background: linear-gradient(135deg, #4ade80, #15803d); box-shadow: 0 0 20px rgba(74, 222, 128, 0.5); }
+            .node-veg:hover h3 { color: #15803d; }
+            .node-veg::after { background: #4ade80; }
+
+            /* 3. المخبوزات - ذهبي كهرماني دافئ يثير الشهية */
+            .node-bakery:hover { border-color: rgba(251, 191, 36, 0.5); box-shadow: 0 25px 45px rgba(251, 191, 36, 0.22); }
+            .node-bakery:hover .neon-halo-wrapper { background: linear-gradient(135deg, #fbbf24, #b45309); box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+            .node-bakery:hover h3 { color: #b45309; }
+            .node-bakery::after { background: #fbbf24; }
+
+            /* 4. اللحوم - أحمر قرمزي ناري وجريء */
+            .node-meats:hover { border-color: rgba(248, 113, 113, 0.5); box-shadow: 0 25px 45px rgba(248, 113, 113, 0.22); }
+            .node-meats:hover .neon-halo-wrapper { background: linear-gradient(135deg, #f87171, #b91c1c); box-shadow: 0 0 20px rgba(248, 113, 113, 0.5); }
+            .node-meats:hover h3 { color: #b91c1c; }
+            .node-meats::after { background: #f87171; }
+
+            /* 5. التموين - تيل زمردي فاخر ومستقر */
+            .node-grocery:hover { border-color: rgba(45, 212, 191, 0.5); box-shadow: 0 25px 45px rgba(45, 212, 191, 0.22); }
+            .node-grocery:hover .neon-halo-wrapper { background: linear-gradient(135deg, #2dd4bf, #0f766e); box-shadow: 0 0 20px rgba(45, 212, 191, 0.5); }
+            .node-grocery:hover h3 { color: #0f766e; }
+            .node-grocery::after { background: #2dd4bf; }
+
+            /* 6. الحلويات - بنفسجي أرجواني غامض ساحر وعصري */
+            .node-sweets:hover { border-color: rgba(192, 132, 252, 0.5); box-shadow: 0 25px 45px rgba(192, 132, 252, 0.22); }
+            .node-sweets:hover .neon-halo-wrapper { background: linear-gradient(135deg, #c084fc, #6b21a8); box-shadow: 0 0 20px rgba(192, 132, 252, 0.5); }
+            .node-sweets:hover h3 { color: #6b21a8; }
+            .node-sweets::after { background: #c084fc; }
+
+            /* 7. المنظفات - أزرق كهربائي فائق النقاء والانتعاش */
+            .node-homecare:hover { border-color: rgba(34, 211, 238, 0.5); box-shadow: 0 25px 45px rgba(34, 211, 238, 0.22); }
+            .node-homecare:hover .neon-halo-wrapper { background: linear-gradient(135deg, #22d3ee, #0369a1); box-shadow: 0 0 20px rgba(34, 211, 238, 0.5); }
+            .node-homecare:hover h3 { color: #0369a1; }
+            .node-homecare::after { background: #22d3ee; }
+
+            /* أنيميشن ومضات العناوين */
+            @keyframes scifiPulse {
+                0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.7); }
+                70% { transform: scale(1.1); opacity: 0.8; box-shadow: 0 0 0 8px rgba(15, 118, 110, 0); }
+                100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); }
+            }
+            @keyframes futuristicBadgeGlow {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+        </style>
+
+        <div class="quantum-scifi-card node-dairy" onclick="smoothScrollTo('dairy-anchor')">
+            <div class="neon-halo-wrapper">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.F-SeCTAhvMGVE2nWUuliRAHaE8?pid=Api&h=220&P=0" alt="الألبان والأجبان">
+            </div>
+            <h3>الألبان والأجبان</h3>
+        </div>
+
+        <div class="quantum-scifi-card node-veg" onclick="smoothScrollTo('veg-anchor')">
+            <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: linear-gradient(-45deg, #22c55e, #4ade80, #16a34a, #4ade80); background-size: 300% 300%; animation: futuristicBadgeGlow 3s ease infinite; color: white; font-size: 9px; font-weight: 900; padding: 2px 10px; border-radius: 20px; z-index: 5; box-shadow: 0 4px 10px rgba(34,197,94,0.3); border: 1px solid rgba(255,255,255,0.3); font-family: 'Cairo', sans-serif;">FRESH</div>
+            <div class="neon-halo-wrapper">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.8F7tnbKqZGrFBAFN1bE4-QHaHa?pid=Api&h=220&P=0" alt="خضار وفواكه">
+            </div>
+            <h3>خضار وفواكه</h3>
+        </div>
+
+        <div class="quantum-scifi-card node-bakery" onclick="smoothScrollTo('bakery-anchor')">
+            <div class="neon-halo-wrapper">
+                <img src="https://tse1.mm.bing.net/th?id=OIF.EjMDHwNuED2%2fF4PzhWiDkg&pid=Api&h=220&P=0" alt="المخبوزات">
+            </div>
+            <h3>المخبوزات</h3>
+        </div>
+
+        <div class="quantum-scifi-card node-meats" onclick="smoothScrollTo('meats-anchor')">
+            <div class="neon-halo-wrapper">
+                <img src="https://tse1.mm.bing.net/th/id/OIP.AuTIieFxdu6_R-j2De-fmgHaER?pid=Api&h=220&P=0" alt="اللحوم والدواجن">
+            </div>
+            <h3>اللحوم والدواجن</h3>
+        </div>
+
+        <div class="quantum-scifi-card node-grocery" onclick="smoothScrollTo('grocery-anchor')">
+            <div class="neon-halo-wrapper">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.O-T0F3yw3DbE-IgzzgPuAAHaE8?pid=Api&h=220&P=0" alt="المواد التموينية">
+            </div>
+            <h3>مواد تموينية</h3>
+        </div>
+
+        <div class="quantum-scifi-card node-sweets" onclick="smoothScrollTo('sweets-anchor')">
+            <div class="neon-halo-wrapper">
+                <img src="https://tse2.mm.bing.net/th/id/OIP.kygXi6TOZb1iPSY-SMJ3uwHaJi?pid=Api&h=220&P=0" alt="الحلويات">
+            </div>
+            <h3>الحلويات</h3>
+        </div>
+
+        <div class="quantum-scifi-card node-homecare" onclick="smoothScrollTo('homecare-anchor')">
+            <div class="neon-halo-wrapper">
+                <img src="https://tse1.mm.bing.net/th/id/OIP.rtN7wvyMB3BhGOi7Sd-fKwHaDt?pid=Api&h=220&P=0" alt="المنظفات">
+            </div>
+            <h3>المنظفات</h3>
+        </div>
+
+    </div>
+</div>
+
+        <div class="bakery-hero-card">
+            <div class="bakery-hero-content">
+                <span class="badge">خبز ساخن طوال اليوم</span>
+                <h2>مخبز البركة الآلي الحديث</h2>
+                <p>تذوقوا المخبوزات الفرنسية، الكعك بالتمر، والخبز العربي الساخن المُعد بأجود أنواع الدقيق وبأعلى معايير النظافة والاتقان.</p>
+            </div>
+            <div class="bakery-hero-image"></div>
+        </div>
+
+        <div id="dairy-anchor">
+            <h3 class="title-decorated">الألبان والأجبان</h3>
+            <div class="subcategory-filters">
+                <button class="filter-btn active" onclick="filterCategoryProducts(this, 'dairy', 'all')">الكل</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'dairy', 'white_cheese')">أجبان بيضاء بلدية</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'dairy', 'yellow_cheese')">أجبان صفراء وشرائح</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'dairy', 'yogurt')">لبن، لبنة وقشدة</button>
+            </div>
+            <div class="products-showcase" id="container-dairy"></div>
+            
+        </div>
+
+        <div id="veg-anchor">
+            <h3 class="title-decorated">خضار وفواكه طازجة</h3>
+            <div class="subcategory-filters">
+                <button class="filter-btn active" onclick="filterCategoryProducts(this, 'vegetables', 'all')">الكل</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'vegetables', 'daily_veg')">خضروات أساسية يومية</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'vegetables', 'fruits')">فواكه موسمية طازجة</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'vegetables', 'leafy')">ورقيات خضراء نضرة</button>
+            </div>
+            <div class="products-showcase" id="container-vegetables"></div>
+    
+        </div>
+
+        <div id="bakery-anchor">
+            <h3 class="title-decorated">المخبوزات والحلويات اليومية</h3>
+            <div class="products-showcase" id="container-bakery"></div>
+        
+        </div>
+
+        <div id="meats-anchor">
+            <h3 class="title-decorated">اللحوم بأنواعها</h3>
+            <div class="subcategory-filters">
+                <button class="filter-btn active" onclick="filterCategoryProducts(this, 'meats', 'all')">الكل</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'meats', 'red_meat')">لحوم حمراء طازجة</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'meats', 'poultry')">دجاج وطيور طازجة</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'meats', 'frozen')">مصنعات ومجمدات</button>
+            </div>
+            <div class="products-showcase" id="container-meats"></div>
+            
+        </div>
+
+        <div id="grocery-anchor">
+            <h3 class="title-decorated">مواد التموين</h3>
+            <div class="subcategory-filters">
+                <button class="filter-btn active" onclick="filterCategoryProducts(this, 'grocery', 'all')">الكل</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'grocery', 'rice')">الحبوب والنشويات</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'grocery', 'cans')">المعلبات والصلصات</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'grocery', 'drinks')">المشروبات</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'grocery', 'cooking')">مستلزمات الطبخ</button>
+            </div>
+            <div class="products-showcase" id="container-grocery"></div>
+            
+        </div>
+
+        <div id="sweets-anchor">
+            <h3 class="title-decorated">حلويات ومسليات</h3>
+            <div class="subcategory-filters">
+                <button class="filter-btn active" onclick="filterCategoryProducts(this, 'sweets', 'all')">الكل</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'sweets', 'chips')">شيبس ومقرمشات</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'sweets', 'chocolate')">شوكولاتة وسكاكر</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'sweets', 'biscuits')">بسكويت وويفر</button>
+            </div>
+            <div class="products-showcase" id="container-sweets"></div>
+            
+        </div>
+
+        <div id="homecare-anchor">
+            <h3 class="title-decorated">العناية بالمنزل والمنظفات</h3>
+            <div class="subcategory-filters">
+                <button class="filter-btn active" onclick="filterCategoryProducts(this, 'homecare', 'all')">الكل</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'homecare', 'laundry')">العناية بالملابس</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'homecare', 'cleaners')">المطهرات والمنظفات</button>
+                <button class="filter-btn" onclick="filterCategoryProducts(this, 'homecare', 'papers')">المنتجات الورقية والاستهلاكية</button>
+            </div>
+            <div class="products-showcase" id="container-homecare"></div>
+            
+        </div>
+
+        
+
+        <div id="services-anchor-box" style="margin: 80px 0; text-align: center;">
+            <div class="working-hours-capsule">🕰️ أوقات الدوام: يومياً من <span>07:00 صباحاً</span> حتى <span>22:00 مساءً</span></div>
+            <br> <br>
+            <a href="tel:0524310286" class="phone-call-btn-link">📞 اتصل بنا مباشرة: 052-8234567</a>
+            &nbsp;&nbsp;
+            <a href="https://waze.com/ul?ll=32.7388,35.1833&navigate=yes" target="_blank" class="waze-premium-btn">📍 موقعنا على Waze الفاخر</a>
+        </div>
+
+    </div>
+
+    
+
+    <footer style="background: var(--luxury-black); color: #94a3b8; text-align: center; padding: 40px 20px; font-weight: 700;">
+        © 2026 سوبر ماركت البركة الكعيبة. تجربة تسوق خيالية مصممة خصيصاً لكم.
+    </footer>
+
+    <!-- بقاء كود الجافا سكريبت الأصلي للعمليات البرمجية كما هو دون تغيير جذري لضمان عمل السلة -->
+    <script>
+       // ==========================================
+// 1. قاعدة البيانات الشاملة لمنتجات متجر البركة
+// ==========================================
+const storeProductsDatabase = {
+    dairy: [
+        { id: 101, name: "جبنة بيضاء بلدية طازجة", price: 18.00, sub: "white_cheese", img: "https://images.unsplash.com/photo-1559561853-08451507cbe7?w=400" },
+        { id: 102, name: "جبنة نابلسية مغلية قزحة", price: 22.50, sub: "white_cheese", img: "https://images.unsplash.com/photo-1559561853-08451507cbe7?w=400" },
+        { id: 103, name: "جبنة صفراء شرائح فاخرة", price: 14.00, sub: "yellow_cheese", img: "https://images.unsplash.com/photo-1624806992066-5ffcf7ca186b?w=400" },
+        { id: 104, name: "جبنة قشقوان قالب ممتاز", price: 19.00, sub: "yellow_cheese", img: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=400" },
+        { id: 105, name: "حليب طازج كامل الدسم 1 لتر", price: 6.50, sub: "yogurt", img: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400" },
+        { id: 106, name: "لبن شمينت غني بالدسم", price: 3.50, sub: "yogurt", img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400" },
+        { id: 107, name: "لبنة بلدية حامضة بالزيت", price: 15.00, sub: "white_cheese", img: "https://images.unsplash.com/photo-1541658016709-82535e94bc69?w=400" }
+    ],
+    vegetables: [
+        { id: 201, name: "بندورة حمراء بلدية طازجة", price: 5.50, sub: "daily_veg", img: "https://images.unsplash.com/photo-1595855759920-86582396756a?w=400" },
+        { id: 202, name: "خيار صنديد نخب أول", price: 4.50, sub: "daily_veg", img: "https://images.unsplash.com/photo-1604948501466-4e9c339b9c24?w=400" },
+        { id: 203, name: "بطاطا بيضاء للطهي والقلي", price: 5.00, sub: "daily_veg", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400" },
+        { id: 204, name: "تفاح أحمر سكري إيطالي", price: 9.00, sub: "fruits", img: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?w=400" },
+        { id: 205, name: "موز صومالي حلو المذاق", price: 6.00, sub: "fruits", img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400" },
+        { id: 206, name: "برتقال عصير طازج", price: 4.00, sub: "fruits", img: "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=400" },
+        { id: 207, name: "ضمة بقدونس مغسولة ونظيفة", price: 1.50, sub: "leafy", img: "https://images.unsplash.com/photo-1515252873117-d56f57ee97a1?w=400" },
+        { id: 208, name: "ضمة نعنع أخضر ذو رائحة زكية", price: 1.50, sub: "leafy", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400" }
+    ],
+    grocery: [
+        { id: 301, name: "زيت ذرة نقي عالي الجودة", price: 35.00, sub: "oils", img: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400" },
+        { id: 302, name: "أرز بسمتي حبة طويلة 5 كجم", price: 45.00, sub: "rice_beans", img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400" },
+        { id: 303, name: "صلصة طماطم عبوة توفيرية", price: 5.00, sub: "canned", img: "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=400" },
+        { id: 304, name: "مكرونة سباجيتي إيطالية", price: 4.50, sub: "pasta", img: "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=400" },
+        { id: 305, name: "سكر أبيض نقي ناعم 1 كجم", price: 4.00, sub: "drinks", img: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=400" },
+       
+        { id: 306, name: "قهوة عربية مطحونة بالهيل", price: 20.00, sub: "drinks", img: "https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=400" },
+        { id: 307, name: "علبة تونة بالزيت نخب أول", price: 6.50, sub: "canned", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400" },
+        { id: 308, name: "عدس مجروش فاخر للشوربة", price: 8.00, sub: "rice_beans", img: "https://images.unsplash.com/photo-1515942400420-2b98fed1f515?w=400" },
+        { id: 309, name: "عدس للشوربة", price: 10.00, sub: "rice_beans", img: "https://mosbatesabz.com/mag/wp-content/uploads/2024/07/lentils-1.jpg" }
+        
+
+    ],
+    bakery: [
+        { id: 401, name: "خبز قمح كامل طازج ساخن", price: 8.00, sub: "all", img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400" },
+        { id: 402, name: "كرواسون فرنسي بالزبدة الهشة", price: 5.00, sub: "all", img: "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=400" },
+        { id: 403, name: "كعك بالسمسم مقرمش بلدية", price: 12.00, sub: "all", img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400" },
+        { id: 404, name: "خبز حمام (صمون) للسندوتشات", price: 6.00, sub: "all", img: "https://images.unsplash.com/photo-1534620808146-d33bb39128b2?w=400" }
+    ],
+    sweets: [
+        { id: 501, name: "شوكولاتة فاخرة مشكلة كادبوري", price: 15.00, sub: "all", img: "https://images.unsplash.com/photo-1548814971-12502693faaf?w=400" },
+        { id: 502, name: "بسكويت شاي سادة مقرمش عبوة ترويجية", price: 8.00, sub: "all", img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400" },
+        { id: 503, name: "شيبس بطاطس طبيعي بنكهة الملح", price: 5.00, sub: "all", img: "https://images.unsplash.com/photo-1566478989037-e924e50ba09c?w=400" },
+        { id: 504, name: "بقلاوة عربية مشكلة بالفستق الحلبي", price: 45.00, sub: "all", img: "https://images.unsplash.com/photo-1534080391025-4979e831447d?w=400" }
+    ],
+    homecare: [
+        { id: 601, name: "سائل جلي مركز للأطباق فيري", price: 12.00, sub: "all", img: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400" },
+        { id: 602, name: "مسحوق غسيل أوتوماتيك اريال 5 كجم", price: 48.00, sub: "all", img: "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=400" },
+        { id: 603, name: "منظف ومعطر أرضيات برائحة اللافندر", price: 15.00, sub: "all", img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400" },
+        { id: 604, name: "مناديل ورقية ناعمة عبوة توفيرية", price: 20.00, sub: "all", img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400" }
+    ],
+    meats: [
+        { id: 701, name: "لحم خروف بلدي طازج مشفي", price: 85.00, sub: "red_meat", img: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400" },
+        { id: 702, name: "شرائح ستيك عجل هولندي فاخر", price: 75.00, sub: "red_meat", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400" },
+        { id: 703, name: "صدر دجاج طازج نظيف ومسحب", price: 28.00, sub: "poultry", img: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400" },
+        { id: 704, name: "لحم مفروم عجل ناعم للكفتة والطهي", price: 60.00, sub: "red_meat", img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400" },
+        { id: 705, name: "شيش طاووق متبل بالخلطة الخاصة جاهز للشوي", price: 35.00, sub: "poultry", img: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400" },
+        { id: 706, name: "فخذ دجاج طازج مغسول ومنظف", price: 18.00, sub: "poultry", img: "https://images.unsplash.com/photo-1569395171110-23c902e5f980?w=400" },
+        { id: 707, name: "برجر بقري جامبو مجمد كيس عائلي", price: 40.00, sub: "frozen", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400" },
+        { id: 708, name: "أصابع كباب مجمدة مجهزة للشوي", price: 38.00, sub: "frozen", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400" }
+    ]
+};
+       let userCartList = [];
+
+window.addEventListener('DOMContentLoaded', () => {
+    initializeAllShowcases();
+    loadCartFromLocalStorage(); // 🔥 تضمن استعادة السلة المحفوظة فوراً
+});
+function initializeAllShowcases() {
+    renderShowcaseCategory('dairy', 'all');
+    renderShowcaseCategory('vegetables', 'all');
+    renderShowcaseCategory('grocery', 'all');   
+    renderShowcaseCategory('bakery', 'all');    
+    renderShowcaseCategory('sweets', 'all');    
+    renderShowcaseCategory('homecare', 'all'); 
+    renderShowcaseCategory('meats', 'all');  
+}
+
+// مصفوفة لتخزين حالة "عرض المزيد" لكل قسم (هل هو مفتوح أم مغلق)
+const showcaseLimitsState = {
+    dairy: false,
+    vegetables: false,
+    grocery: false,
+    bakery: false,
+    sweets: false,
+    homecare: false,
+    meats: false
+};
+
+// الدالة الأساسية المحدثة لضمان استقرار وتناسق الصور والكروت عند النزول لأسفل
+function renderShowcaseCategory(catKey, subFilter) {
+    const container = document.getElementById(`container-${catKey}`);
+    if(!container) return;
+    
+    container.innerHTML = '';
+    
+    const rawProducts = storeProductsDatabase[catKey] || [];
+    const filtered = rawProducts.filter(item => subFilter === 'all' || item.sub === subFilter);
+
+    // حد العرض المبدئي للمنتجات
+    const initialLimit = 2; 
+    const isExpanded = showcaseLimitsState[catKey];
+    
+    const productsToRender = isExpanded ? filtered : filtered.slice(0, initialLimit);
+
+    productsToRender.forEach(prod => {
+        // تم إضافة تنسيقات حماية مدمجة للصورة (aspect-ratio و object-fit) لضمان الترتيب الهندسي الفوري
+        const cardHTML = `
+            <div class="premium-product-card" style="display: flex; flex-direction: column; height: 100%;">
+                <div style="width: 100%; aspect-ratio: 4/3; background-color: #f3f4f6; overflow: hidden; border-radius: 8px; position: relative;">
+                    <img src="${prod.img}" alt="${prod.name}" loading="lazy" 
+                         style="width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.3s ease;"
+                         onerror="this.src='https://placehold.co/400x300/0f766e/ffffff?text=البركة'">
+                </div>
+                <h4>${prod.name}</h4>
+                <div class="card-footer" style="margin-top: auto;">
+                    <span class="price-tag">${prod.price.toFixed(2)} ₪</span>
+                    <button class="circle-add-btn" onclick="animateAndAddProduct(event, ${prod.id}, '${prod.name}', ${prod.price})">+</button>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', cardHTML);
+    });
+
+    // تشغيل زر عرض المزيد أسفل الحاوية لكل قسم بشكل هندسي صحيح
+    manageShowMoreButton(catKey, filtered.length, initialLimit);
+}
+// 2. دالة التحكم ببناء زر عرض المزيد هندسياً خارج شبكة المنتجات لمنع الخربطة
+function manageShowMoreButton(catKey, totalItems, limit) {
+    // إزالة الزر القديم المكرر إن وجد لمنع تراكم الأزرار
+    let btnRow = document.getElementById(`btn-row-${catKey}`);
+    if (btnRow) btnRow.remove();
+
+    // إذا كان عدد منتجات القسم 4 أو أقل، لا داعي لظهور الزر نهائياً
+    if (totalItems <= limit) return;
+
+    const isExpanded = showcaseLimitsState[catKey];
+    const remainingItems = totalItems - limit;
+
+    const container = document.getElementById(`container-${catKey}`);
+    if (!container) return;
+
+    // بناء الزر الأخضر الزمردي بتصميم متزن ومستقل بمنتصف الصفحة
+    const buttonHTML = `
+        <div id="btn-row-${catKey}" style="width: 100%; text-align: center; margin: 30px auto 15px auto; display: block; clear: both; position: relative; z-index: 40;">
+            <button class="category-toggle-btn" style="padding: 12px 40px; font-weight: 900; font-size: 14px; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; border: none;" 
+                    onclick="handleShowMoreClick('${catKey}')">
+                ${isExpanded ? 'عرض أقل ⬆️' : `عرض المزيد (+${remainingItems}) ⬇️`}
+            </button>
+        </div>
+    `;
+    
+    // حقن الزر بعد انتهاء شبكة الجريد تماماً لضمان عدم حدوث أي تشويه بصري
+    container.after(document.createRange().createContextualFragment(buttonHTML));
+}
+
+// 3. دالة معالجة النقر والصعود الانسيابي المنظم لأعلى القسم
+function handleShowMoreClick(catKey) {
+    if (showcaseLimitsState[catKey] === undefined) return;
+
+    // حفظ حالة القسم قبل التبديل
+    const wasExpanded = showcaseLimitsState[catKey];
+    
+    // قلب الحالة برمجياً (المفتوح يغلق والمغلق يفتح)
+    showcaseLimitsState[catKey] = !showcaseLimitsState[catKey];
+    
+    // قراءة الفلتر الفرعي النشط حالياً بمتجرك للمحافظة على تصفية الزبون
+    let currentActiveSub = 'all';
+    const sectionElement = document.getElementById(`container-${catKey}`);
+    if (sectionElement && sectionElement.parentElement) {
+        const activeSubBtn = sectionElement.parentElement.querySelector('.filter-btn.active');
+        if (activeSubBtn) {
+            const onclickAttr = activeSubBtn.getAttribute('onclick');
+            if (onclickAttr) {
+                const matches = onclickAttr.match(/'([^']+)'/g);
+                if (matches && matches.length >= 2) {
+                    currentActiveSub = matches[1].replace(/'/g, ''); 
+                }
+            }
+        }
+    }
+    
+    // إعادة بناء القسم فوراً بالتعديلات الجديدة
+    renderShowcaseCategory(catKey, currentActiveSub);
+    
+    // إذا ضغط العميل على "عرض أقل"، نعود بالشاشة بنعومة لأعلى الفئة نفسها دون أي قفز عشوائي
+    if (wasExpanded && sectionElement) {
+        const parentWrapper = sectionElement.parentElement;
+        if (parentWrapper) {
+            setTimeout(() => {
+                const offsetPosition = parentWrapper.getBoundingClientRect().top + window.pageYOffset - 120;
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }, 50); // تأخير بسيط جداً لضمان اكتمال تقلص الصفحة أولاً
+        }
+    }
+}
+// 1. دالة تصفية الأقسام الفرعية عند النقر على الأزرار الداخلية
+function filterCategoryProducts(btnElement, catKey, subKey) {
+    // إرجاع القسم لوضع "عرض المزيد" الطبيعي عند تبديل الفلاتر الفرعية
+    if (showcaseLimitsState[catKey] !== undefined) {
+        showcaseLimitsState[catKey] = false;
+    }
+
+    const parent = btnElement.parentElement;
+    const buttons = parent.querySelectorAll('.filter-btn');
+    buttons.forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+    renderShowcaseCategory(catKey, subKey);
+}
+
+// 2. دالة الانتقال السلس المطور للأقسام السبعة العلوية (تم إصلاحها بالكامل)
+function smoothScrollTo(elementId) {
+    const targetElement = document.getElementById(elementId);
+    if (targetElement) {
+        window.scrollTo({ 
+            top: targetElement.offsetTop - 100, 
+            behavior: 'smooth' 
+        });
+    }
+}
+
+// 3. الدالة المسؤولة عن التركيز والتنقل من القائمة العلوية (تم تصحيح القوس المعطل)
+function focusAndFilterAnchor(anchorId, catKey) {
+    const targetElement = document.getElementById(anchorId);
+    if (targetElement) {
+        // حساب موقع القسم البرمجي مع ترك مسافة علوية للهيدر الثابت
+        const headerOffset = 130; 
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+        });
+    }
+
+    // تصفير حالة "عرض المزيد" للفئة لتبدأ بشكل مرتب للزبون عند الانتقال إليها
+    if (showcaseLimitsState[catKey] !== undefined) {
+        showcaseLimitsState[catKey] = false;
+        renderShowcaseCategory(catKey, 'all');
+    }
+}
+
+function toggleCartMenu(shouldOpen) {
+    const sidebar = document.getElementById('sidebarCart');
+    const overlay = document.getElementById('cartOverlay');
+    if (shouldOpen) {
+        sidebar.classList.add('open'); overlay.classList.add('active');
+    } else {
+        sidebar.classList.remove('open'); overlay.classList.remove('active');
+    }
+}
+
+function animateAndAddProduct(event, id, name, price) {
+    const btnElement = event.currentTarget;
+    const basketBtn = document.getElementById('main-basket-btn');
+    
+    if (btnElement && basketBtn) {
+        const productCard = btnElement.closest('.premium-product-card');
+        let imgStyle = '';
+        if (productCard) {
+            const productImg = productCard.querySelector('img');
+            if (productImg) imgStyle = `background-image: url('${productImg.src}');`;
+        }
+
+        const btnRect = btnElement.getBoundingClientRect();
+        const basketRect = basketBtn.getBoundingClientRect();
+
+        const startX = btnRect.left;
+        const startY = btnRect.top;
+        const endX = basketRect.left;
+        const endY = basketRect.top;
+
+        const flyer = document.createElement('div');
+         flyer.className = 'flying-product-premium';
+        flyer.setAttribute('style', `top: ${startY}px; left: ${startX}px; ${imgStyle}`);
+        document.body.appendChild(flyer);
+
+        requestAnimationFrame(() => {
+            flyer.style.transform = `translate(${endX - startX}px, ${endY - startY}px) scale(0.15) rotate(720deg)`;
+            flyer.style.opacity = '0.3';
+        });
+
+        flyer.addEventListener('transitionend', () => { flyer.remove(); });
+    }
+
+    // 1. إضافة المنتج إلى مصفوفة السلة
+    const match = userCartList.find(item => item.id === id);
+    if (match) match.qty += 1;
+    else userCartList.push({ id: id, name: name, price: price, qty: 1 });
+
+    // 2. حساب إجمالي عدد المنتجات في السلة حالياً
+    const totalItemsCount = userCartList.reduce((sum, item) => sum + item.qty, 0);
+
+    // 3. تحديث العدادات قسرياً في جميع الأشكال المحتملة للـ الـ IDs بملفك:
+    const counters = [
+        'main-basket-count',  // العداد داخل زر السلة العائم/الرئيسي
+        'cartCountBadge',     // شارة العدد العلوية
+        'cart-count',         // عداد كلاسيكي
+        'basket-count'        // عداد إضافي
+    ];
+    
+    counters.forEach(idName => {
+        const el = document.getElementById(idName);
+        if (el) {
+            el.innerText = totalItemsCount;
+        }
+    });
+
+    // 4. استدعاء دالة التحديث الأصلية وحفظ السلة في الذاكرة
+    if (typeof refreshCartInterface === 'function') {
+        refreshCartInterface();
+    } else {
+        // حماية إضافية: إذا كانت الدالة الأصلية باسم آخر، نقوم بحفظ السلة في الذاكرة مباشرة هنا
+        if (typeof saveCartToLocalStorage === 'function') {
+            saveCartToLocalStorage();
+        }
+    }
+}
+
+// =========================================================
+// 1. الدالة المفقودة المسؤولة عن طباعة المنتجات وحساب الأسعار بالسلة
+// =========================================================
+function refreshCartInterface() {
+    // قراءة الحاويات الصحيحة من كود الـ HTML الخاص بك
+    const cartItemsContainer = document.getElementById('cart-items-list-container');
+    const cartTotalElement = document.getElementById('cart-total-amount');
+    const mainBasketCount = document.getElementById('main-basket-count');
+
+    // تحديث العداد العلوي الصغير في السلة
+    const totalItemsCount = userCartList.reduce((sum, item) => sum + item.qty, 0);
+    if (mainBasketCount) {
+        mainBasketCount.innerText = totalItemsCount;
+    }
+
+    // حفظ أي تغيير في ذاكرة المتصفح فوراً
+    saveCartToLocalStorage();
+
+    if (!cartItemsContainer) return;
+    cartItemsContainer.innerHTML = '';
+
+    let totalPriceSum = 0;
+
+    // حالة السلة فارغة
+    if (!userCartList || userCartList.length === 0) {
+        cartItemsContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: #94a3b8; font-family: 'Cairo';">
+                <span style="font-size: 40px; display: block; margin-bottom: 10px;">🛒</span>
+                <p style="margin: 0; font-size: 14px; font-weight: 700;">سلتك فارغة حالياً</p>
+            </div>
+        `;
+        if (cartTotalElement) cartTotalElement.innerText = "0.00";
+        return;
+    }
+
+    // طباعة كروت المنتجات داخل السلة الجانبية برسم هندسي مريح للهواتف
+    userCartList.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        totalPriceSum += itemTotal;
+
+        const itemHTML = `
+            <div class="cart-premium-item" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 8px; border-bottom: 1px solid #f3f4f6; direction: rtl; font-family: 'Cairo';">
+                <div style="flex: 1; text-align: right; padding-left: 10px;">
+                    <h5 style="margin: 0; font-size: 13px; font-weight: 700; color: #1f2937;">${item.name}</h5>
+                    <span style="font-size: 12px; color: #0f766e; font-weight: 700;">${item.price.toFixed(2)} ₪</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; background: #e5e7eb; padding: 4px 10px; border-radius: 30px;">
+                    <button onclick="changeCartQty(${item.id}, -1)" style="border: none; background: none; font-size: 16px; font-weight: bold; cursor: pointer; color: #4b5563; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">-</button>
+                    <span style="font-size: 13px; font-weight: 900; color: #111827; min-width: 15px; text-align: center;">${item.qty}</span>
+                    <button onclick="changeCartQty(${item.id}, 1)" style="border: none; background: none; font-size: 14px; font-weight: bold; cursor: pointer; color: #4b5563; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">+</button>
+                </div>
+                <div style="min-width: 70px; text-align: left; font-size: 13px; font-weight: 900; color: #1f2937;">
+                    ${itemTotal.toFixed(2)} ₪
+                </div>
+            </div>
+        `;
+        cartItemsContainer.insertAdjacentHTML('beforeend', itemHTML);
+    });
+
+    // تحديث المجموع الإجمالي بالأسفل
+    if (cartTotalElement) {
+        cartTotalElement.innerText = totalPriceSum.toFixed(2);
+    }
+}
+
+// =========================================================
+// 2. دالة التحكم بتعديل الكميات (+ أو -) والحذف التلقائي عند الوصول لـ صفر
+// =========================================================
+function changeCartQty(id, change) {
+    const match = userCartList.find(item => item.id === id);
+    if (match) {
+        match.qty += change;
+        if (match.qty <= 0) {
+            userCartList = userCartList.filter(item => item.id !== id);
+        }
+        refreshCartInterface();
+    }
+}
+
+// =========================================================
+// 3. دوالي الحفظ والاستعادة التلقائية من ذاكرة الهاتف المحلية (LocalStorage)
+// =========================================================
+function saveCartToLocalStorage() {
+    localStorage.setItem('albaraka_cart', JSON.stringify(userCartList));
+}
+
+function loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem('albaraka_cart');
+    if (savedCart) {
+        userCartList = JSON.parse(savedCart);
+        refreshCartInterface();
+    }
+}
+
+function sendCartToWhatsApp() {
+    // 1. التحقق من وجود منتجات بالسلة
+    if (!userCartList || userCartList.length === 0) {
+        alert("سلتك فارغة حالياً، يرجى إضافة منتجات أولاً! 🛒");
+        return;
+    }
+
+    // 2. قراءة بيانات حقول الإدخال (الاسم والعنوان) إن وجدت بالـ HTML
+    const nameInput = document.getElementById('customer-name');
+    const addressInput = document.getElementById('customer-address');
+    
+    const name = nameInput && nameInput.value.trim() !== "" ? nameInput.value.trim() : "زبون متجر البركة";
+    const address = addressInput && addressInput.value.trim() !== "" ? addressInput.value.trim() : "التوصيل للعنوان المسجل";
+
+    // ⚠️ ضع رقم هاتف متجرك الفعلي هنا بالصيغة الدولية (بدون أصفار وبدون علامة +)
+    const storeWhatsAppNumber = "9720524310286"; 
+
+    // 3. صياغة نص الرسالة وتنسيقها هندسياً للواتساب
+    let messageText = `*طلب جديد من متجر البركة الإلكتروني ✨*\n\n`;
+    messageText += `👤 *اسم الزبون:* ${name}\n`;
+    messageText += `📍 *العنوان:* ${address}\n`;
+    messageText += `-----------------------------------\n\n`;
+    messageText += `🛒 *تفاصيل المشتريات:*\n`;
+
+    let finalTotal = 0;
+    
+    userCartList.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        finalTotal += itemTotal;
+        messageText += `${index + 1}) *${item.name}*\n     الكمية: [ ${item.qty} ] ✖️ السعر: ${item.price.toFixed(2)} ₪ ⬅️ *${itemTotal.toFixed(2)} ₪*\n`;
+    });
+
+    messageText += `\n-----------------------------------\n`;
+    messageText += `💰 *الإجمالي النهائي للطلب:* [ *${finalTotal.toFixed(2)} ₪* ]\n\n`;
+    messageText += `🚙 _يرجى تجهيز الطلب والتوصيل في أقرب وقت ممكن._`;
+
+    // 4. تشفير النص وتحضير الرابط السريع لقاعدة بيانات الـ API للواتساب
+    const encodedMessage = encodeURIComponent(messageText);
+    const whatsappURL = `https://api.whatsapp.com/send?phone=${storeWhatsAppNumber}&text=${encodedMessage}`;
+    
+    // 5. فتح الرابط قسرياً ومباشرة
+    window.open(whatsappURL, '_blank');
+
+    // 6. تصفير الذاكرة وتحديث العداد العلوي بشكل مدمج ومباشر لمنع التعارض
+    userCartList = [];
+    
+    const mainBasketCount = document.getElementById('main-basket-count');
+    if (mainBasketCount) {
+        mainBasketCount.innerText = "0";
+    }
+    
+    const cartItemsContainer = document.getElementById('cart-items-list-container');
+    if (cartItemsContainer) {
+        cartItemsContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px 20px; color: #94a3b8; font-family: 'Cairo';">
+                <span style="font-size: 40px; display: block; margin-bottom: 10px;">🛒</span>
+                <p style="margin: 0; font-size: 14px; font-weight: 700;">سلتك فارغة حالياً</p>
+            </div>
+        `;
+    }
+
+    const cartTotalElement = document.getElementById('cart-total-amount');
+    if (cartTotalElement) {
+        cartTotalElement.innerText = "0.00";
+    }
+
+    if (typeof toggleCartMenu === 'function') {
+        toggleCartMenu(false);
+    }
+    
+    alert("تم تجهيز الطلب ونقلك إلى واتساب لإرساله للإدارة! 🎉");
+}
+    </script>
+</body>
+</html>
