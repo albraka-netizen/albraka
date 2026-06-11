@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
+        
         :root {
             /* هوية بصرية خيالية وزجاجية فاخرة */
             --primary-solid: #0f766e;    
@@ -496,10 +497,7 @@ body {
     text-decoration: none;
     font-weight: 700;
 }
-/* إلغاء البنر والفراغات ليلتصق الهيدر بالسلايدر مباشرة */
-.promo-banner {
-    display: none !important; /* إخفاء البنر تماماً ليفسح المجال للسلايدر */
-}
+
 
 .header-spacer {
     display: none !important; /* إلغاء الفراغ الأبيض المزعج */
@@ -508,6 +506,204 @@ body {
 .slider-section {
     margin-top: 75px !important; /* يجعل السلايدر يبدأ أسفل الهيدر (ارتفاعه 75px) مباشرة */
 }
+
+/* حل مشكلة نزول السلة وثبات الهيدر على الهاتف */
+.custom-premium-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 70px !important; /* ارتفاع ثابت يمنع التداخل */
+    background: #0b3f3b !important;
+    border-bottom: 2px solid rgba(234, 179, 8, 0.35) !important;
+    z-index: 99999 !important;
+    box-shadow: 0 8px 32px rgba(11, 63, 59, 0.18) !important;
+    direction: rtl !important;
+    
+    /* استخدام Flexbox بدلاً من Table لمنع الهبوط */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 15px !important;
+    box-sizing: border-box !important;
+}
+
+/* توزيع متساوي لعناصر الهيدر يضمن بقاء السلة على اليسار دائماً */
+.menu-trigger-btn { order: 1 !important; }
+.brand-logo-container { order: 2 !important; margin: 0 auto !important; }
+#main-basket-btn { 
+    order: 3 !important; 
+    white-space: nowrap !important; /* يمنع الزر من الانقسام أو النزول */
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+/* تعديل الهامش العلوي للسلايدر ليتناسب تماماً مع الهيدر المصلح */
+.slider-section {
+    margin-top: 70px !important;
+}
+/* ========================================================
+   ستـايل المنيو الثوري المليء بالحياة والنبض الحركي (Cyber-Vibrant)
+   مع ترويسة وزر إغلاق فائق الفخامة والرقة
+   ======================================================== */
+
+/* 1. تأثير حركة الخلفية الدوارة لتعطي إحساساً دائماً بالنشاط والتجدد */
+@keyframes cyberFluidGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. هيكل القائمة الجانبية: خلفية سائلة حية ومستقبلية تكسر الملل بالكامل */
+.side-menu-container, 
+[class*="side-menu"], 
+[class*="sidebar"]:not(.sidebar-cart) {
+    background: linear-gradient(
+        -45deg, 
+        rgba(15, 118, 110, 0.45), 
+        rgba(13, 148, 136, 0.5), 
+        rgba(254, 240, 138, 0.25),
+        rgba(255, 255, 255, 0.55)
+    ) !important;
+    background-size: 400% 400% !important;
+    animation: cyberFluidGlow 12s ease infinite !important; /* حركة التدرج اللوني الانسيابية ببطء خلف الأزرار */
+    
+    backdrop-filter: blur(35px) saturate(230%) !important; /* تصفية ونقاء فائق الجودة يعكس ألوان متجرك */
+    -webkit-backdrop-filter: blur(35px) saturate(230%) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.7) !important; /* خط رفيع بلوري دقيق */
+    box-shadow: -15px 0 50px rgba(15, 118, 110, 0.1) !important;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important; /* فتح وإغلاق انسيابي ناعم للغاية */
+}
+
+/* 3. [تحديث فاخر جداً] ترويسة المنيو المشرقة والمنسابة برقة مطلقة */
+.side-menu-header,
+[class*="menu-header"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: 1px solid rgba(15, 118, 110, 0.06) !important; /* خط سفلي دقيق شبه شفاف */
+    padding: 24px 20px !important; /* توزيع أبعاد متناسق وأنيق */
+    background: rgba(255, 255, 255, 0.25) !important; /* زجاج إضافي فائق النقاء للقسم العلوي */
+    box-shadow: 0 4px 15px rgba(15, 118, 110, 0.02) !important;
+}
+
+.side-menu-header h3,
+[class*="menu-header"] h3,
+.side-menu-header *,
+[class*="menu-header"] * {
+    color: #042f2e !important; /* لون داكن عميق وواضح */
+    font-weight: 900 !important;
+    font-family: 'Cairo', sans-serif !important;
+    font-size: 17px !important;
+    letter-spacing: 0.5px !important;
+    text-shadow: 0 2px 10px rgba(15, 118, 110, 0.12) !important;
+}
+
+/* 4. قائمة وحاوية الروابط الرفيعة */
+.side-menu-ul, 
+[class*="menu-ul"], 
+[class*="side-menu"] ul {
+    list-style: none !important;
+    padding: 14px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px !important; /* أبعاد رشيقة تعطي واجهة مستخدم مريحة جداً */
+}
+
+/* 5. هندسة الأزرار الرفيعة والأنيقة (Slim Cyber Buttons) */
+.side-menu-ul li a, 
+[class*="menu-ul"] li a,
+[class*="side-menu"] ul li a,
+[class*="side-menu"] .menu-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 12px 16px !important; /* سمك رفيع ومريح جداً للأزرار */
+    color: #0f766e !important; /* اللون الزمردي الأنيق */
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    border-radius: 14px !important; /* زوايا منحنية رشيقة ونحيفة */
+    background: rgba(255, 255, 255, 0.65) !important; /* تداخل زجاجي ناصع نقي */
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.03), inset 0 1px 2px rgba(255,255,255,0.9) !important;
+    cursor: pointer !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important; /* تفاعل حركي فائق الانسيابية والسلاسة */
+}
+
+/* 6. تأثير التمرير (Hover) - ينبض بالحداثة الفاخرة والطاقة المبهجة */
+.side-menu-ul li a:hover, 
+[class*="menu-ul"] li a:hover,
+[class*="side-menu"] ul li a:hover,
+[class*="side-menu"] .menu-item:hover {
+    color: #ffffff !important; /* يتحول النص للبياض المشرق الفاخر */
+    background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%) !important; /* تدرج مشع للزر عند التفاعل */
+    border-color: #0f766e !important;
+    transform: translateX(-6px) scale(1.02) !important; /* إزاحة حركية سلسة جداً لليمين تعطي إيحاء تفاعلي مميز */
+    box-shadow: 0 12px 22px rgba(15, 118, 110, 0.25) !important;
+}
+
+/* 7. الأيقونات والإيموجي بالداخل لتكون ناعمة ومتفاعلة */
+.side-menu-ul li a span,
+[class*="menu-icon"],
+[class*="menu-ul"] li a span {
+    font-size: 16px !important;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+/* تفاعل الأيقونة بحركة نابضة بالحياة */
+.side-menu-ul li a:hover span,
+[class*="menu-ul"] li a:hover span,
+[class*="menu-item"]:hover [class*="menu-icon"] {
+    transform: scale(1.25) rotate(8deg) !important; /* تكبير رشيق وحركي للأيقونة يكسر جمود الأزرار */
+}
+
+/* 8. استجابة فيزيائية مرنة جداً عند النقر الفعلي بالإصبع على شاشات الهاتف (:active) */
+.side-menu-ul li a:active,
+[class*="menu-ul"] li a:active,
+[class*="menu-item"]:active {
+    transform: scale(0.95) translateX(-4px) !important; /* انضغاط تلميسي ذكي وناعم يعطي شعوراً فورياً بالاستجابة */
+    background: #042f2e !important;
+    color: #ffffff !important;
+}
+
+/* [تحديث ثوري ومميز جداً] زر إغلاق المنيو البلوري الأنيق الفخم (✕) */
+.side-menu-header button,
+[class*="menu-header"] button {
+    background: rgba(15, 118, 110, 0.05) !important;
+    border: 1px solid rgba(15, 118, 110, 0.15) !important;
+    color: #0f766e !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 12px !important; /* زوايا منحنية رشيقة تناسب الأزرار وليست دائرة جامدة */
+    font-size: 14px !important;
+    font-weight: bold !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important; /* حركة فيزيائية منسابة */
+}
+
+/* حركة التمرير المبهجة والمشعة لزر الإغلاق */
+.side-menu-header button:hover,
+[class*="menu-header"] button:hover {
+    background: #ef4444 !important; /* يتحول للون الأحمر النيون الأنيق */
+    color: #ffffff !important;
+    border-color: #ef4444 !important;
+    transform: rotate(90deg) scale(1.08) !important; /* يدور برقة ويكبر قليلاً للتفاعل البصري المميز */
+    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* ارتداد تلميسي ذكي لزر الإغلاق عند نقره على شاشة الهاتف */
+.side-menu-header button:active,
+[class*="menu-header"] button:active {
+    transform: scale(0.9) rotate(90deg) !important; /* ينكمش بالإصبع ليعطيك إيحاء كأنه زر حقيقي */
+}
+
+
     </style>
 </head>
 <body>
@@ -563,33 +759,15 @@ body {
             <button onclick="toggleAlbarakaMenu(false)" style="background: none; border: none; color: #cbd5e1; font-size: 22px; cursor: pointer;">✕</button>
         </div>
         
-        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
-            <li>
-                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('promo-slider-anchor')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
-                    🏠 الرئيسية
-                </a>
-            </li>
-            <li>
-                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('all-products')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
-                    📦 جميع المنتجات
-                </a>
-            </li>
-            <li>
-                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('vegetables')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
-                    🍎 الخضار والفواكه
-                </a>
-            </li>
-            <li>
-                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('canned-food')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.1)'" onmouseout="this.style.background='transparent'">
-                    🥫 المواد التموينية
-                </a>
-            </li>
-            <li>
-                <a onclick="toggleAlbarakaMenu(false); smoothScrollTo('offers')" style="color: #fef08a; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.3s;" onmouseover="this.style.background='rgba(254, 240, 138, 0.15)'" onmouseout="this.style.background='transparent'">
-                    🔥 أقوى العروض
-                </a>
-            </li>
-        </ul>
+     <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+    <li><a onclick="toggleAlbarakaMenu(false); switchPremiumView('main-container')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer;">الفئات الرئيسية  </a></li>
+    
+    <li><a onclick="toggleAlbarakaMenu(false); toggleCartMenu(true)" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer;"> سلة المشتريات</a></li>
+    
+    <li><a onclick="toggleAlbarakaMenu(false); switchPremiumView('orders')" style="color: #ffffff; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; cursor: pointer;"> العروض </a></li>
+    
+    <li><a onclick="toggleAlbarakaMenu(false); switchPremiumView('support')" style="color: #fef08a; text-decoration: none; font-size: 16px; display: block; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer;"> اتصل بنا </a></li>
+</ul>
     </div>
 </div>
 <script>
@@ -617,10 +795,9 @@ function toggleAlbarakaMenu(open) {
     <div id="cartOverlay" class="cart-overlay" onclick="toggleCartMenu(false)"></div>
 
     <div id="sidebarCart" class="sidebar-cart">
-        <div class="cart-top-bar">
-            <h3 style="font-weight: 900; font-size: 20px; color: var(--luxury-black);">🛒 سلة المشتريات</h3>
-            <button class="close-cart-btn" onclick="toggleCartMenu(false)" style="background: none; border: none; font-size: 30px; cursor: pointer; color: #94a3b8;">×</button>
-        </div>
+        <div class="cart-close-wrapper" style="padding: 15px 20px; display: flex; justify-content: flex-end; border-bottom: 1px solid rgba(0,0,0,0.05);">
+    <button type="button" onclick="if(typeof toggleCartMenu === 'function') toggleCartMenu(false);" class="cart-close-premium-btn">✕</button>
+</div>
         
         <div class="cart-scroll-area" id="cart-items-list-container"></div>
         
@@ -634,20 +811,25 @@ function toggleAlbarakaMenu(open) {
             <button class="continue-shopping-btn" onclick="toggleCartMenu(false)">متابعة التسوق</button>
         </div>
     </div>
-
-  <div id="promo-slider-anchor"></div>
-<div class="magic-slider-wrapper" style="margin-bottom: 40px; width: 100%; position: relative; overflow: hidden; height: 500px; border-radius: 24px; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);">
-    
-    <img id="main-dynamic-slide" src="https://tse4.mm.bing.net/th/id/OIP.klaRbgyX1VvjqqUvjjjp4gAAAA?pid=Api&h=220&P=0" alt="طبيعة ساحرة" 
+<div id="promo-slider-anchor"></div>
+<div class="magic-slider-wrapper" style="margin-bottom: 40px; width: 100%; position: relative; overflow: hidden; height: 500px; border-radius: 0; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);">
+    <style>
+    /* سحب السلايدر للأعلى ليختفي تحت الهيدر ثم يظهر تحته مباشرة */
+    .magic-slider-wrapper {
+        margin-top: -75px !important; 
+        padding-top: 75px !important;
+    }
+</style>
+    <img id="main-dynamic-slide" src="https://images.unsplash.com/photo-1601598851547-4302969d0614?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D alt="طبيعة ساحرة" 
          style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; transform: scale(1); transition: opacity 1.2s ease-in-out, transform 8s linear;">
     
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135px, rgba(13, 27, 42, 0.6) 0%, rgba(47, 62, 70, 0.4) 100%); z-index: 2;"></div>
     
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; z-index: 3;">
         <div id="magic-text-container" style="background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 50px; border-radius: 30px; max-width: 75%; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.2); transition: all 1s ease-in-out; transform: translateY(0); opacity: 1;">
-            <h2 id="slider-main-title" style="font-size: 38px; margin-top: 0; margin-bottom: 15px; font-weight: 800; color: #ffffff; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-family: 'Cairo', sans-serif;">جودة نضمنها لك</h2>
+            <h2 id="slider-main-title" style="font-size: 38px; margin-top: 0; margin-bottom: 15px; font-weight: 800; color: #ffffff; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-family: 'Cairo', sans-serif;">جودة مختارة بعناية </h2>
             <div id="magic-line" style="width: 60px; height: 3px; background: linear-gradient(90deg, transparent, #2ec4b6, transparent); margin: 0 auto 20px auto; transition: width 0.8s ease;"></div>
-            <p id="slider-sub-title" style="font-size: 19px; margin: 0; font-weight: 500; color: #f1f5f9; text-shadow: 0 2px 8px rgba(0,0,0,0.4); line-height: 1.8;">أجود المواد التموينية والسلع الأساسية من أفخر الماركات العالمية.</p>
+            <p id="slider-sub-title" style="font-size: 19px; margin: 0; font-weight: 500; color: #f1f5f9; text-shadow: 0 2px 8px rgba(0,0,0,0.4); line-height: 1.8;">شغفنا هو تقديم الأفضل, لأسلوب حياة صحي ومتميز</p>
         </div>
     </div>
 
@@ -660,14 +842,14 @@ function toggleAlbarakaMenu(open) {
 
 
 
-<div class="main-container">
+<div id="main-container">
         
         <div class="scifi-orbital-viewport" style="max-width: 1300px; margin: 40px auto; padding: 10px 20px; direction: rtl; position: relative;">
     
     <div style="text-align: center; margin-bottom: 35px; position: relative;">
-        <span style="font-size: 11px; font-weight: 900; color: #0f766e; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 5px; font-family: 'Cairo', sans-serif;">Premium Hyper Market</span>
+        <span style="font-size: 11px; font-weight: 900; color: #0f766e; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 5px; font-family: 'Cairo', sans-serif;">The best for less</span>
         <h3 style="font-size: 26px; font-weight: 900; color: #0f172a; margin: 0; font-family: 'Cairo', sans-serif; display: inline-flex; align-items: center; gap: 10px;">
-            تصفح الأقسام الذكية 
+     الأفضل بتكلفة أقل
             <span style="display: inline-block; width: 8px; height: 8px; background: #0f766e; border-radius: 50%; box-shadow: 0 0 12px #0f766e; animation: scifiPulse 1.5s infinite;"></span>
         </h3>
     </div>
@@ -838,7 +1020,7 @@ function toggleAlbarakaMenu(open) {
 
         <div class="quantum-scifi-card node-dairy" onclick="smoothScrollTo('dairy-anchor')">
             <div class="neon-halo-wrapper">
-                <img src="https://tse2.mm.bing.net/th/id/OIP.F-SeCTAhvMGVE2nWUuliRAHaE8?pid=Api&h=220&P=0" alt="الألبان والأجبان">
+                <img src="https://media.istockphoto.com/id/1031348326/photo/fresh-dairy-products.jpg?s=2048x2048&w=is&k=20&c=ndFC_KdrczKeopimbfCFafBPwszDTVIWILqc777YsxU=" alt="الألبان والأجبان">
             </div>
             <h3>الألبان والأجبان</h3>
         </div>
@@ -846,42 +1028,42 @@ function toggleAlbarakaMenu(open) {
         <div class="quantum-scifi-card node-veg" onclick="smoothScrollTo('veg-anchor')">
             <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: linear-gradient(-45deg, #22c55e, #4ade80, #16a34a, #4ade80); background-size: 300% 300%; animation: futuristicBadgeGlow 3s ease infinite; color: white; font-size: 9px; font-weight: 900; padding: 2px 10px; border-radius: 20px; z-index: 5; box-shadow: 0 4px 10px rgba(34,197,94,0.3); border: 1px solid rgba(255,255,255,0.3); font-family: 'Cairo', sans-serif;">FRESH</div>
             <div class="neon-halo-wrapper">
-                <img src="https://tse2.mm.bing.net/th/id/OIP.8F7tnbKqZGrFBAFN1bE4-QHaHa?pid=Api&h=220&P=0" alt="خضار وفواكه">
+                <img src="https://media.istockphoto.com/id/1257538623/photo/fresh-food-delivery-service.jpg?s=612x612&w=0&k=20&c=hg3RGzMLLqNIUEp6kcwEuCXDGf2SSiVyD6pzXhj8_NA=" alt="خضار وفواكه">
             </div>
             <h3>خضار وفواكه</h3>
         </div>
 
         <div class="quantum-scifi-card node-bakery" onclick="smoothScrollTo('bakery-anchor')">
             <div class="neon-halo-wrapper">
-                <img src="https://tse1.mm.bing.net/th?id=OIF.EjMDHwNuED2%2fF4PzhWiDkg&pid=Api&h=220&P=0" alt="المخبوزات">
+                <img src="https://media.istockphoto.com/id/1370529871/photo/chefs-hands-spraying-flour-over-the-dough.jpg?s=612x612&w=0&k=20&c=X6XQjuwHHokbf3CLJh5e9k1x01VPGJb1Spbe3WcpKO4=" alt="المخبوزات">
             </div>
             <h3>المخبوزات</h3>
         </div>
 
         <div class="quantum-scifi-card node-meats" onclick="smoothScrollTo('meats-anchor')">
             <div class="neon-halo-wrapper">
-                <img src="https://tse1.mm.bing.net/th/id/OIP.AuTIieFxdu6_R-j2De-fmgHaER?pid=Api&h=220&P=0" alt="اللحوم والدواجن">
+                <img src="https://media.istockphoto.com/id/531464366/photo/beef-steaks-on-the-grill.jpg?s=612x612&w=0&k=20&c=gP5ViGnJ08YTzXthSOMKzZEMqtAbcM2jhEao09W1kAQ=" alt="اللحوم والدواجن">
             </div>
             <h3>اللحوم والدواجن</h3>
         </div>
 
         <div class="quantum-scifi-card node-grocery" onclick="smoothScrollTo('grocery-anchor')">
             <div class="neon-halo-wrapper">
-                <img src="https://tse3.mm.bing.net/th/id/OIP.O-T0F3yw3DbE-IgzzgPuAAHaE8?pid=Api&h=220&P=0" alt="المواد التموينية">
+                <img src="https://media.istockphoto.com/id/1284074785/photo/non-perishable-foods-coming-out-a-paper-bag-copy-space.jpg?s=2048x2048&w=is&k=20&c=oNRuym5KMRrfiHfNVoXVFbXN0CeY-XFYSOT0SaKeePY=" alt="المواد التموينية">
             </div>
             <h3>مواد تموينية</h3>
         </div>
 
         <div class="quantum-scifi-card node-sweets" onclick="smoothScrollTo('sweets-anchor')">
             <div class="neon-halo-wrapper">
-                <img src="https://tse2.mm.bing.net/th/id/OIP.kygXi6TOZb1iPSY-SMJ3uwHaJi?pid=Api&h=220&P=0" alt="الحلويات">
+                <img src="https://media.istockphoto.com/id/639434416/photo/bar-of-dark-chocolate-close-up-and-variety-of-candy.jpg?s=2048x2048&w=is&k=20&c=aBKWFKjDpMFHDSLzr_A0zlaILSjG-Xgaty-s8qWmMNY=" alt="الحلويات">
             </div>
             <h3>الحلويات</h3>
         </div>
 
         <div class="quantum-scifi-card node-homecare" onclick="smoothScrollTo('homecare-anchor')">
             <div class="neon-halo-wrapper">
-                <img src="https://tse1.mm.bing.net/th/id/OIP.rtN7wvyMB3BhGOi7Sd-fKwHaDt?pid=Api&h=220&P=0" alt="المنظفات">
+                <img src="https://media.istockphoto.com/id/1434398256/photo/basket-full-of-cleaning-products-and-tools-on-kitchen-counter.jpg?s=2048x2048&w=is&k=20&c=TUPR8DI9ukdCMFqzDuhjZf5j33_JjalmJwXz7YYyyoA=" alt="المنظفات">
             </div>
             <h3>المنظفات</h3>
         </div>
@@ -976,11 +1158,11 @@ function toggleAlbarakaMenu(open) {
             <div class="products-showcase" id="container-homecare"></div>
             
         </div>
-
+        
         
 
         <div id="services-anchor-box" style="margin: 80px 0; text-align: center;">
-            <div class="working-hours-capsule">🕰️ أوقات الدوام: يومياً من <span>07:00 صباحاً</span> حتى <span>22:00 مساءً</span></div>
+            <div class="working-hours-capsule">🕰️ أوقات الدوام: يوميًا من <span>07:00 صباحاً</span> حتى <span>22:00 مساءً</span></div>
             <br> <br>
             <a href="tel:0524310286" class="phone-call-btn-link">📞 اتصل بنا مباشرة: 052-8234567</a>
             &nbsp;&nbsp;
@@ -1692,6 +1874,80 @@ setTimeout(() => {
 }, 2500);
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. تحديد جميع الروابط أو الأزرار داخل المنيو الجانبي الخاص بك
+    const menuLinks = document.querySelectorAll('.side-menu-ul li a, [class*="menu-ul"] li a, [class*="side-menu"] ul li a');
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            // منع السلوك الافتراضي مؤقتاً للتحكم الكامل بالحركة
+            e.preventDefault();
+
+            // قراءة النص الموجود داخل الزر لمعرفة أين يريد العميل الذهاب
+            const linkText = this.textContent.trim();
+
+            // 2. خريطة الانتقال الذكية (ربط نص الزر بالـ ID الفعلي للقسم في صفحتك)
+            let targetSectionId = '';
+
+            if (linkText.includes('اتصل') || linkText.includes('تواصل') || linkText.includes('الدعم')) {
+                targetSectionId = 'services-anchor-box'; // أو الـ ID الفعلي لقسم اتصل بنا لديك مثل contact أو footer
+            } else if (linkText.includes('الرئيسية') || linkText.includes('المتجر')) {
+                targetSectionId = 'main-container'; // اسم الهيدر أو أعلى الصفحة
+            } else if (linkText.includes('خضار') || linkText.includes('فواكه')) {
+                targetSectionId = 'showcase'; // اسم قسم المنتجات أو الفئات لديك
+            } else if (linkText.includes('طلباتي')) {
+                targetSectionId = 'orders'; // قسم الطلبات السابقة إذا كان متوفراً
+            }
+
+            // 3. تنفيذ الانتقال البرمجي الدقيق فوراً
+            if (targetSectionId) {
+                const targetElement = document.getElementById(targetSectionId);
+                if (targetElement) {
+                    // الانتقال السلس والمباشر إلى القسم المطلوب
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+
+                    // 4. إغلاق المنيو تلقائياً بعد الانتقال ليرى العميل الصفحة
+                    if (typeof toggleAlbarakaMenu === 'function') {
+                        toggleAlbarakaMenu(false);
+                    }
+                } else {
+                    console.log('القسم المطلوب غير موجود في هذه الصفحة:', targetSectionId);
+                }
+            }
+        });
+    });
+});
+// 1. قائمة الصور التي تريد التنقل بينها
+    const images = [
+        "https://plus.unsplash.com/premium_photo-1674228288342-d72cf144e5de?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+       
+        "https://media.istockphoto.com/id/1412723839/photo/online-buying-and-delivery-concept.jpg?s=2048x2048&w=is&k=20&c=N9QAFA3CGlHNGAEizSPjF_GwFNhq3RcElgsE_A8qgn8="
+    ];
+
+    let currentImgIndex = 0;
+    const imgElement = document.getElementById('main-dynamic-slide');
+
+    function changeImage() {
+        // تأثير تلاشي بسيط قبل تغيير الصورة
+        imgElement.style.opacity = 0;
+
+        setTimeout(() => {
+            // الانتقال للصورة التالية في المصفوفة
+            currentImgIndex = (currentImgIndex + 1) % images.length;
+            imgElement.src = images[currentImgIndex];
+            
+            // إعادة ظهور الصورة
+            imgElement.style.opacity = 1;
+        }, 1200); // الوقت يتناسب مع transition الموجود في الـ CSS الخاص بك
+    }
+
+    // تغيير الصورة كل 5 ثواني
+    setInterval(changeImage, 5000);
+
     </script>
 </body>
 </html>
