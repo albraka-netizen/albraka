@@ -707,7 +707,31 @@ body {
     transform: scale(0.9) rotate(90deg) !important; /* ينكمش بالإصبع ليعطيك إيحاء كأنه زر حقيقي */
 }
 
+/* هذا الكود يعالج مشكلة تقلص الهيدر والسلايدر على الهاتف */
+@media (max-width: 768px) {
+    /* جعل الهيدر يأخذ كامل العرض وتغيير ترتيبه للعمودي إذا لزم الأمر */
+    .custom-premium-header {
+        flex-direction: column !important; /* ترتيب العناصر فوق بعضها */
+        width: 100% !important;
+        padding: 10px !important;
+        box-sizing: border-box !important;
+    }
 
+    /* ضمان أن السلايدر يأخذ عرض الشاشة كاملاً */
+    .slider, .custom-slider-container {
+        width: 100% !important;
+        max-width: 100vw !important; /* الـ vw تعني عرض شاشة الهاتف كاملاً */
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden; /* منع التمدد الأفقي المزعج */
+    }
+
+    /* تصغير البحث على الهاتف ليكون مناسباً */
+    #search-container {
+        max-width: 100% !important;
+        margin: 10px 0 !important;
+    }
+}
     </style>
 </head>
 <body>
