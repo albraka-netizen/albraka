@@ -526,6 +526,19 @@ body {
     font-size: 0 !important;
 }
 
+
+/* استهدف الصور داخل السلايدر */
+.slider-container img, 
+.carousel img, 
+.swiper-slide img { /* اختر الكلاس الذي تستخدمه للسلايدر */
+    width: 100% !important;      /* عرض الصورة يملأ الحاوية */
+    height: 100% !important;     /* ارتفاع الصورة يملأ الحاوية */
+    object-fit: cover !important; /* "تغطية" المساحة بالكامل بدون تشويه */
+    object-position: center !important; /* جعل الصورة تتركز من المنتصف */
+}
+
+
+
 /* 2. الصورة هي المحرك الأساسي */
 #main-dynamic-slide {
     width: 100% !important;
@@ -814,6 +827,15 @@ html, body {
 @media (min-width: 768px) {
     .working-hours-capsule { flex: 0 0 auto; margin-bottom: 0; }
 }
+
+
+
+
+
+
+
+
+
 
     </style>
 </head>
@@ -1284,7 +1306,92 @@ function toggleAlbarakaMenu(open) {
     
 
 
+<style>
+    /* بطاقة المنتج - تصميم احترافي */
+    .product-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    .product-card:hover { transform: translateY(-5px); }
+    
+    /* عرض الصورة كاملة دون قص */
+    .product-image-container {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #f8f8f8;
+        margin-bottom: 10px;
+    }
+    .product-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain !important; /* سر إظهار المنتج كاملاً */
+    }
 
+    /* زر عرض المزيد */
+    #load-more-btn {
+        background: transparent;
+        border: 2px solid #0f766e;
+        color: #0f766e;
+        padding: 12px 30px;
+        border-radius: 50px;
+        display: block;
+        margin: 30px auto;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #load-more-btn:hover { background: #0f766e; color: #fff; }
+
+
+    #services-anchor-box {
+    display: flex;             /* تفعيل التنسيق الأفقي */
+    flex-wrap: wrap;           /* السماح بنزول العناصر للسطر التالي إذا كانت الشاشة صغيرة */
+    align-items: center;       /* محاذاة العناصر في المنتصف عمودياً */
+    justify-content: center;   /* توزيع العناصر في منتصف الصفحة */
+    gap: 15px;                 /* مسافة صغيرة بين العناصر */
+    padding: 10px;             /* مساحة داخلية للراحة البصرية */
+}
+
+/* لضبط مظهر العناصر داخل الصندوق */
+#services-anchor-box .working-hours-capsule,
+#services-anchor-box .phone-call-btn-link,
+#services-anchor-box .waze-premium-btn {
+    white-space: nowrap;       /* منع انقسام النص داخل العنصر الواحد */
+}
+</style>
+
+
+
+<button id="load-more-btn">عرض المزيد</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const products = document.querySelectorAll('.product-card');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        let visibleCount = 8; // عرض 8 منتجات في المرة
+
+        function updateDisplay() {
+            products.forEach((product, index) => {
+                product.style.display = (index < visibleCount) ? 'flex' : 'none';
+            });
+            if (visibleCount >= products.length) loadMoreBtn.style.display = 'none';
+        }
+
+        loadMoreBtn.addEventListener('click', () => {
+            visibleCount += 8;
+            updateDisplay();
+        });
+
+        updateDisplay(); // تشغيل عند التحميل
+    });
+</script>
 
 
     <footer style="background: var(--luxury-black); color: #94a3b8; text-align: center; padding: 40px 20px; font-weight: 700;">
@@ -1298,8 +1405,8 @@ function toggleAlbarakaMenu(open) {
 // ==========================================
 const storeProductsDatabase = {
     dairy: [
-        { id: 101, name: "جبنة بيضاء بلدية طازجة", price: 18.00, sub: "white_cheese", img: "https://images.unsplash.com/photo-1559561853-08451507cbe7?w=400" },
-        { id: 102, name: "جبنة نابلسية مغلية قزحة", price: 22.50, sub: "white_cheese", img: "https://images.unsplash.com/photo-1559561853-08451507cbe7?w=400" },
+        { id: 101, name: "جبنة بيضاء بنسبة 9% دهون ", price: 7.00, sub: "white_cheese", img: "https://noyhasade.b-cdn.net/wp-content/uploads/2026/03/7290000047942_600.jpg" },
+        { id: 102, name: "حليب مدعم بنسبة 3% دهون", price: 9.00, sub: "white_cheese", img: "https://noyhasade.b-cdn.net/wp-content/uploads/2020/09/7290107932080-600-fix.jpg" },
         { id: 103, name: "جبنة صفراء شرائح فاخرة", price: 14.00, sub: "yellow_cheese", img: "https://images.unsplash.com/photo-1624806992066-5ffcf7ca186b?w=400" },
         { id: 104, name: "جبنة قشقوان قالب ممتاز", price: 19.00, sub: "yellow_cheese", img: "https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=400" },
         { id: 105, name: "حليب طازج كامل الدسم 1 لتر", price: 6.50, sub: "yogurt", img: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400" },
@@ -2066,9 +2173,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     
+(function() {
+        const style = document.createElement('style');
+        style.innerHTML = `
+            /* استهداف صور المنتجات في أي مكان داخل حاوية العرض */
+            .products-showcase img {
+                object-fit: contain !important;
+                width: 100% !important;
+                height: 200px !important;
+                background-color: #ffffff !important;
+                display: block !important;
+                margin: 0 !important;
+            }
+            /* إجبار الحاويات على عدم قص المحتوى */
+            .products-showcase div {
+                overflow: visible !important;
+            }
+        `;
+        document.head.appendChild(style);
+    })();
 
 
 
+
+    
+
+    
+
+    
  
 
 
