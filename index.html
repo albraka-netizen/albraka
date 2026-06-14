@@ -466,22 +466,7 @@ body {
 .new-price { color: #ef4444; font-weight: 800; font-size: 18px; }
 .old-price { color: #94a3b8; text-decoration: line-through; font-size: 14px; }
 
-/*  قسم التواصل */
-.contact-wrapper {
-    background: linear-gradient(135deg, #0b3f3b 0%, #042f2e 100%);
-    border-radius: 24px;
-    padding: 40px;
-    color: #ffffff;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    box-shadow: 0 10px 30px rgba(11, 63, 59, 0.2);
-}
-.contact-info a {
-    color: #fef08a;
-    text-decoration: none;
-    font-weight: 700;
-}
+
 
 
 .header-spacer {
@@ -732,6 +717,67 @@ body {
         margin: 10px 0 !important;
     }
 }
+
+/* الحاوية الأساسية */
+#services-anchor-box {
+    display: flex; /* ترتيب العناصر بجانب بعضها */
+    flex-wrap: wrap; /* السماح بالالتفاف في الشاشات الصغيرة */
+    justify-content: center; /* توسيط العناصر */
+    align-items: center; /* محاذاة عمودية */
+    gap: 15px; /* مسافة بين العناصر */
+    width: 100%;
+}
+/* 1. الحاوية الأساسية - لإعطاء مساحة وعدم التصاق */
+#services-anchor-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 60px 20px; /* مسافة كافية للفصل عن الفوتر والمنتجات */
+    background-color: #ffffff;
+    margin: 40px auto;
+    text-align: center;
+}
+
+/* 2. تنسيق كبسولة الأوقات */
+.working-hours-capsule {
+    background: #f0fdf4;
+    color: #2c3e50;
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: 1px solid #dcfce7;
+    font-weight: 600;
+    font-size: 15px;
+    flex: 0 0 100%; /* اجعلها تأخذ سطر خاص بها في الشاشات الصغيرة */
+    margin-bottom: 10px;
+}
+
+/* 3. تنسيق الأزرار باللون الزمردي (واتساب) */
+.phone-call-btn-link, .waze-premium-btn {
+    background: #136767 !important; /* اللون الزمردي الزاهي الخاص بواتساب */
+    color: white !important;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none !important;
+    font-weight: bold;
+    transition: all 0.4s ease;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); /* ظل متناسق مع لون واتساب */
+    display: inline-block;
+    border: none;
+}
+
+.phone-call-btn-link:hover, .waze-premium-btn:hover {
+    background: #128C7E !important; /* درجة أغمق قليلاً من لون واتساب عند التحويم */
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(18, 140, 126, 0.4);
+}
+
+/* 4. تنسيق الاستجابة للهاتف */
+@media (min-width: 768px) {
+    .working-hours-capsule { flex: 0 0 auto; margin-bottom: 0; }
+}
+
     </style>
 </head>
 <body>
@@ -1189,16 +1235,15 @@ function toggleAlbarakaMenu(open) {
         
         
 
-        <div id="services-anchor-box" style="margin: 80px 0; text-align: center; display: inline-block;">
-            <div class="working-hours-capsule">🕰️ أوقات الدوام: يوميًا من <span>07:00 صباحاً</span> حتى <span>22:00 مساءً</span></div>
-            
-            <a href="tel:0524310286" class="phone-call-btn-link">📞 اتصل بنا مباشرة: 052-8234567</a>
-            &nbsp;&nbsp;
-            <a href="https://waze.com/ul?ll=32.7388,35.1833&navigate=yes" target="_blank" class="waze-premium-btn">📍 موقعنا على Waze </a>
-        </div>
-
+      <div id="services-anchor-box">
+    <div class="working-hours-capsule">
+        🕰️ أوقات الدوام: يوميًا من <span>07:00 صباحاً</span> حتى <span>22:00 مساءً</span>
     </div>
-
+    
+    <a href="tel:0524310286" class="phone-call-btn-link">📞 اتصل بنا: 052-8234567</a>
+    
+    <a href="https://waze.com/ul?ll=32.7388,35.1833&navigate=yes" target="_blank" class="waze-premium-btn">📍 موقعنا على Waze</a>
+</div>
     
 
     <footer style="background: var(--luxury-black); color: #94a3b8; text-align: center; padding: 40px 20px; font-weight: 700;">
