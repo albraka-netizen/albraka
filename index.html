@@ -526,11 +526,6 @@ body {
     font-size: 0 !important;
 }
 
-
-
-
-
-
 /* 2. الصورة هي المحرك الأساسي */
 #main-dynamic-slide {
     width: 100% !important;
@@ -753,44 +748,41 @@ html, body {
 }
 
 
+
 #services-anchor-box {
-    display: flex;
-    flex-direction: row !important; /* ترتيب أفقي إجباري */
-    flex-wrap: nowrap !important;   /* منع نزول العناصر للسطر التالي */
-    justify-content: flex-start;    /* البدء من جهة اليمين (لأن لغتك عربية) */
-    align-items: center;
-    gap: 20px;                      /* المسافة بين العناصر */
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 15px !important;
     
-    /* خصائص السحب الأفقي */
-    width: 100%;
-    overflow-x: auto;               /* تفعيل السحب عند الحاجة */
-    padding: 20px 10px;             /* مسافة داخلية */
-    margin: 40px 0;                 /* مسافة خارجية */
-    
-    /* لمسة جمالية: منع ظهور شريط التمرير */
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    width: 100% !important;
+    overflow-x: auto !important; /* تفعيل السكرول */
+    -webkit-overflow-scrolling: touch !important;
+    padding: 20px 10px !important;
+    margin: 20px 0 !important;
+    background: transparent !important;
 }
 
-#services-anchor-box::-webkit-scrollbar {
-    display: none;
-}
-
-/* منع العناصر من الانضغاط (لضمان بقاء حجمها كما هو) */
+/* التأكد من أن كل عنصر داخل الحاوية لا ينكمش */
 #services-anchor-box > * {
-    flex-shrink: 0; 
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
 }
-/* 2. تنسيق كبسولة الأوقات */
+
+/* تنسيق الكبسولة مع اللمعة */
 .working-hours-capsule {
-    background: #f0fdf4;
-    color: #2c3e50;
-    padding: 12px 25px;
-    border-radius: 50px;
-    border: 1px solid #dcfce7;
-    font-weight: 600;
-    font-size: 15px;
-    flex: 0 0 100%; /* اجعلها تأخذ سطر خاص بها في الشاشات الصغيرة */
-    margin-bottom: 10px;
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%) !important;
+    color: #065f46 !important;
+    padding: 12px 25px !important;
+    border-radius: 50px !important;
+    border: 1px solid rgba(16, 185, 129, 0.2) !important;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.15) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
 }
 
 
@@ -1354,21 +1346,7 @@ function toggleAlbarakaMenu(open) {
     #load-more-btn:hover { background: #0f766e; color: #fff; }
 
 
-    #services-anchor-box {
-    display: flex;             /* تفعيل التنسيق الأفقي */
-    flex-wrap: wrap;           /* السماح بنزول العناصر للسطر التالي إذا كانت الشاشة صغيرة */
-    align-items: center;       /* محاذاة العناصر في المنتصف عمودياً */
-    justify-content: center;   /* توزيع العناصر في منتصف الصفحة */
-    gap: 15px;                 /* مسافة صغيرة بين العناصر */
-    padding: 10px;             /* مساحة داخلية للراحة البصرية */
-}
-
-/* لضبط مظهر العناصر داخل الصندوق */
-#services-anchor-box .working-hours-capsule,
-#services-anchor-box .phone-call-btn-link,
-#services-anchor-box .waze-premium-btn {
-    white-space: nowrap;       /* منع انقسام النص داخل العنصر الواحد */
-}
+   
 </style>
 
 
