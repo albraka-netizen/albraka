@@ -404,6 +404,34 @@ body {
     gap: 25px;
 }
 
+.futuristic-scrolly-deck {
+    display: flex !important;
+    gap: 15px !important;
+    padding: 20px !important;
+    
+    /* إخفاء شريط التمرير نهائياً وبكل الطرق */
+    overflow-x: auto !important;
+    scrollbar-width: none !important; /* فايرفوكس */
+    -ms-overflow-style: none !important; /* إنترنت إكسبلورر */
+}
+
+/* إخفاء الشريط في كروم وسفاري */
+.futuristic-scrolly-deck::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* تحسين السحب على الجوال والكمبيوتر */
+.futuristic-scrolly-deck {
+    -webkit-overflow-scrolling: touch !important; /* سحب ناعم جداً للآيفون */
+    scroll-behavior: smooth !important; /* تمرير هادئ عند الضغط على أي شيء */
+}
+
+.quantum-scifi-card {
+    flex: 0 0 135px !important;
+    /* إزالة الـ snap إذا كانت تضايقك في التنقل */
+    scroll-snap-align: none !important; 
+}
+
 /*  بطاقات الفئات الفاخرة */
 .category-card {
     background: #ffffff;
@@ -808,7 +836,7 @@ body {
             <a class="brand-logo-container" onclick="smoothScrollTo('promo-slider-anchor')" style="text-decoration: none !important; cursor: pointer !important; display: inline-block !important;">
                 <div class="brand-logo" style="display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; font-family: 'Cairo', sans-serif !important; margin: 0 !important; padding: 0 !important;">
                     <span class="main-title" style="font-size: 25px !important; font-weight: 900 !important; color: #fef08a !important; letter-spacing: 1px !important; line-height: 1.1 !important; text-shadow: 0 0 15px rgba(234, 179, 8, 0.45) !important;">
-                        الـبـركـة
+                        الـبـركة
                     </span>
                     <div class="logo-divider" style="width: 45px !important; height: 1px !important; background: linear-gradient(90deg, transparent, #eab308, transparent) !important; margin: 5px 0 4px 0 !important; opacity: 0.8 !important;"></div>
                     <span class="sub-title" style="font-size: 10px !important; font-weight: 500 !important; color: #cbd5e1 !important; letter-spacing: 4px !important; line-height: 1 !important; text-indent: 4px !important;">
@@ -906,7 +934,7 @@ function toggleAlbarakaMenu(open) {
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135px, rgba(13, 27, 42, 0.6) 0%, rgba(47, 62, 70, 0.4) 100%); z-index: 2;"></div>
     
     <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; z-index: 3;">
-        <div id="magic-text-container" style="background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 50px; border-radius: 30px; max-width: 75%; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.2); transition: all 1s ease-in-out; transform: translateY(0); opacity: 1;">
+        <div id="magic-text-container" style="background: rgba(4, 6, 85, 0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 40px 50px; border-radius: 30px; max-width: 75%; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 15px 35px rgba(0,0,0,0.2); transition: all 1s ease-in-out; transform: translateY(0); opacity: 1;">
             <h2 id="slider-main-title" style="font-size: 38px; margin-top: 0; margin-bottom: 15px; font-weight: 800; color: #ffffff; text-shadow: 0 4px 15px rgba(0,0,0,0.4); font-family: 'Cairo', sans-serif;">جودة مختارة بعناية </h2>
             <div id="magic-line" style="width: 60px; height: 3px; background: linear-gradient(90deg, transparent, #2ec4b6, transparent); margin: 0 auto 20px auto; transition: width 0.8s ease;"></div>
             <p id="slider-sub-title" style="font-size: 19px; margin: 0; font-weight: 500; color: #f1f5f9; text-shadow: 0 2px 8px rgba(0,0,0,0.4); line-height: 1.8;">شغفنا هو تقديم الأفضل, لأسلوب حياة صحي ومتميز</p>
@@ -929,7 +957,7 @@ function toggleAlbarakaMenu(open) {
     <div style="text-align: center; margin-bottom: 35px; position: relative;">
         <span style="font-size: 11px; font-weight: 900; color: #0f766e; letter-spacing: 3px; text-transform: uppercase; display: block; margin-bottom: 5px; font-family: 'Cairo', sans-serif;">The best for less</span>
         <h3 style="font-size: 26px; font-weight: 900; color: #0f172a; margin: 0; font-family: 'Cairo', sans-serif; display: inline-flex; align-items: center; gap: 10px;">
-     الأفضل بتكلفة أقل
+     الأفضل بتكلفة أقل ومريحة
             <span style="display: inline-block; width: 8px; height: 8px; background: #0f766e; border-radius: 50%; box-shadow: 0 0 12px #0f766e; animation: scifiPulse 1.5s infinite;"></span>
         </h3>
     </div>
@@ -943,7 +971,7 @@ function toggleAlbarakaMenu(open) {
             /* تحويل التصميم إلى شبكة متناسقة في الشاشات الكبيرة تلقائياً */
             @media (min-width: 992px) {
                 .futuristic-scrolly-deck {
-                    display: grid !important;
+                    display: flex;
                     grid-template-columns: repeat(7, 1fr) !important;
                     overflow-x: visible !important;
                     gap: 15px !important;
@@ -1253,6 +1281,10 @@ function toggleAlbarakaMenu(open) {
     <a href="https://waze.com/ul?ll=32.7388,35.1833&navigate=yes" target="_blank" class="waze-premium-btn">📍 موقعنا على Waze</a>
 </div>
     
+
+
+
+
 
     <footer style="background: var(--luxury-black); color: #94a3b8; text-align: center; padding: 40px 20px; font-weight: 700;">
         © 2026 سوبر ماركت البركة الكعيبة. تجربة تسوق خيالية مصممة خصيصاً لكم.
