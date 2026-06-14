@@ -515,23 +515,27 @@ body {
     box-sizing: border-box;
 }
 
-/* 2. إصلاح السلايدر لمنع ظهور المساحة البيضاء */
+/* 1. السلايدر يجب أن يكون كتلته متماسكة */
 .slider-container {
     width: 100% !important;
-    max-width: 100% !important; /* ضمان عدم تجاوز عرض الشاشة */
-    overflow: hidden !important; /* قص أي شيء يخرج عن النطاق */
-    position: relative;
-    margin: 0 !important;
-    padding: 0 !important;
+    position: relative !important;
+    display: block !important;
+    overflow: hidden !important;
+    /* إجبار الحاوية على أخذ حجم الصورة تماماً */
+    line-height: 0 !important; 
+    font-size: 0 !important;
 }
 
+/* 2. الصورة هي المحرك الأساسي */
 #main-dynamic-slide {
     width: 100% !important;
-    height: auto !important;
-    display: block;
-    object-fit: cover;
-    aspect-ratio: 16/9; /* يحافظ على التناسب */
-    max-width: 100% !important; /* أهم سطر لمنع الصورة من دفع الصفحة يميناً */
+    height: auto !important; /* هذا يسمح للصورة بتعديل ارتفاعها تلقائياً */
+    display: block !important;
+    /* إزالة aspect-ratio مؤقتاً إذا كان يسبب فراغاً، أو استخدامه بدقة */
+    aspect-ratio: auto 16/9; 
+    object-fit: cover !important;
+    /* التخلص من أي فراغات إضافية تحت الصورة */
+    vertical-align: top !important;
 }
 
 /* 3. تنظيف شامل للصفحة لمنع "خروج" أي عنصر */
