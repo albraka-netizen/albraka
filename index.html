@@ -752,30 +752,34 @@ html, body {
     }
 }
 
-/* الحاوية الأساسية */
-#services-anchor-box {
-    display: flex; /* ترتيب العناصر بجانب بعضها */
-    flex-wrap: wrap; /* السماح بالالتفاف في الشاشات الصغيرة */
-    justify-content: center; /* توسيط العناصر */
-    align-items: center; /* محاذاة عمودية */
-    gap: 15px; /* مسافة بين العناصر */
-    width: 100%;
-}
-/* 1. الحاوية الأساسية - لإعطاء مساحة وعدم التصاق */
+
 #services-anchor-box {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row !important; /* الترتيب الأفقي */
-    flex-wrap: nowrap !important;   /*
-    justify-content: center;
+    flex-direction: row !important; /* ترتيب أفقي إجباري */
+    flex-wrap: nowrap !important;   /* منع نزول العناصر للسطر التالي */
+    justify-content: flex-start;    /* البدء من جهة اليمين (لأن لغتك عربية) */
     align-items: center;
-    gap: 20px;
-    padding: 60px 20px; /* مسافة كافية للفصل عن الفوتر والمنتجات */
-    background: transparent !important;
-    margin: 40px auto;
-    text-align: center;
+    gap: 20px;                      /* المسافة بين العناصر */
+    
+    /* خصائص السحب الأفقي */
+    width: 100%;
+    overflow-x: auto;               /* تفعيل السحب عند الحاجة */
+    padding: 20px 10px;             /* مسافة داخلية */
+    margin: 40px 0;                 /* مسافة خارجية */
+    
+    /* لمسة جمالية: منع ظهور شريط التمرير */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
+#services-anchor-box::-webkit-scrollbar {
+    display: none;
+}
+
+/* منع العناصر من الانضغاط (لضمان بقاء حجمها كما هو) */
+#services-anchor-box > * {
+    flex-shrink: 0; 
+}
 /* 2. تنسيق كبسولة الأوقات */
 .working-hours-capsule {
     background: #f0fdf4;
