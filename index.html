@@ -404,27 +404,6 @@ body {
     gap: 25px;
 }
 
-/* 1. الحاوية: تلميح بصري بأن هناك المزيد */
-.categories-scroll-container {
-    display: flex !important;
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 15px !important;
-    padding: 20px 20px !important; /* مسافة أمان من الأطراف */
-    justify-content: flex-start !important; /* البدء من اليسار */
-    scrollbar-width: none;
-}
-
-/* 2. إضافة تأثير "الظلال المتدرجة" عند الحواف (اختياري لكنه احترافي) */
-.categories-scroll-container::after {
-    content: '';
-    flex: 0 0 20px; /* مساحة فارغة في نهاية السطر لتجعل الفئة الأخيرة تظهر مقصوصة */
-}
-
-
-
-
 /*  بطاقات الفئات الفاخرة */
 .category-card {
     background: #ffffff;
